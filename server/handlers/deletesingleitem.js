@@ -10,12 +10,12 @@ const options = {
   useUnifiedTopology: true,
 };
 
-const functionName = async (request, response) => {
+const deleteCartItem = async (request, response) => {
 
   //if needed
-  const { something } = request.body;
+  // const { userId, itemId } = request.body;
   //if needed
-  const { somethingElse } = request.params;
+  const { userId, itemId } = request.params;
 
   const client = new MongoClient(MONGO_URI, options);
 
@@ -23,8 +23,11 @@ const functionName = async (request, response) => {
     await client.connect();
     const db = client.db("ecommerce");
 
-    const result = await db.collection("colection.Name").SOMEFUNCTION();
+    console.log("1")
 
+    const result = await db.collection("users").updateOne({ _id: userId }, { $pull: { cart: { _id: itemId } } });
+
+    console.log("2")
     //SOME LOGIC
     result
         ? response.status(200).json({ status: 200, data: result })
@@ -33,3 +36,9 @@ const functionName = async (request, response) => {
   finally { client.close()};
 
 }
+
+
+module.exports = deleteCartItem
+
+//.delete('/delete/cart/:userId/items/:itemId', deleteCartItem)
+//const deleteCartItem = require('./handlers/deletesingleitem');
