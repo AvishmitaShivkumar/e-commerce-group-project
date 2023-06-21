@@ -1,10 +1,12 @@
 import styled from "styled-components"
 
+
 const Header = () => {
 
   return (
     <Container>
-      <p>test</p>
+      <input type="search" value="text" placeholder="Activity tracker"/> 
+      <p>Cart</p>
     </Container>
   )
 
