@@ -48,7 +48,7 @@ Users should be able to:
     - The cart **CANNOT** use `sessionStorage` or `localStorage`, and must be persistent.
     - **HINT**: use the database. Yes it will be slow, but use it anyways.
 - Edit the cart before completing the purchase.
-    - **HINT**: use a reducer.
+  
 
 ## Backend Requirements
 
