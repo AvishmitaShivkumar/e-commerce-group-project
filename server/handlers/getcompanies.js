@@ -1,6 +1,5 @@
 'use strict';
 const { MongoClient } = require("mongodb");
-const { v4: uuidv4 } = require('uuid');
 
 require("dotenv").config();
 const { MONGO_URI } = process.env;
@@ -10,12 +9,7 @@ const options = {
   useUnifiedTopology: true,
 };
 
-const functionName = async (request, response) => {
-
-  //if needed
-  const { something } = request.body;
-  //if needed
-  const { somethingElse } = request.params;
+const getCompanies = async (request, response) => {
 
   const client = new MongoClient(MONGO_URI, options);
 
@@ -23,13 +17,23 @@ const functionName = async (request, response) => {
     await client.connect();
     const db = client.db("ecommerce");
 
-    const result = await db.collection("colection.Name").SOMEFUNCTION();
 
-    //SOME LOGIC
-    result
-        ? response.status(200).json({ status: 200, data: result })
-        : response.status(404).json({ status: 404, data: "Not Found" });
+    // Find method chained with toArray to get all the companies found in our database
+    const companies = await db.collection("companies").find().toArray();
+    console.log(companies)
+
+    //if companies are never found, the server will respond. If found, the data will be a list of all companies
+    companies
+        ? response.status(200).json({ status: 200, data: companies })
+        : response.status(404).json({ status: 404, message: "Companies not found" });
   } catch(err) {err => console.log(err)}
   finally { client.close()};
-
 }
+
+module.exports = getCompanies
+
+
+// code for server.js
+// const getCompanies = require('./handlers/getcompanies')
+// .get("/companies", getCompanies)
+// 
