@@ -12,6 +12,8 @@ import SearchPage from './searchpage';
 import SignIn from './signin';
 import SignUp from './signup';
 import GlobalStyles from './globalstyles';
+import ContactSupport from "./contact";
+
 
 function App() {
 
@@ -30,7 +32,8 @@ function App() {
                 <Route path="/searchpage" element={<SearchPage />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/error" element={<Error />} />
+                <Route path="/contactsupport" element={<ContactSupport/>}/>
+                <Route path="*" element={<Error />} />
             </Routes>
         </BrowserRouter>
 
