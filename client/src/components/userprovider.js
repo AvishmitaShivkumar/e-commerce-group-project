@@ -4,7 +4,7 @@ const UserProvider = () => {
 
   return (
     <Container>
-      <p>test</p>
+      <p>tested</p>
     </Container>
   )
 
