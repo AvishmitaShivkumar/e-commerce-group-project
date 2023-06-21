@@ -8,16 +8,16 @@ const Header = () => {
     <Container>
       <h1>Logo</h1>
       <div>
-        <NavLink>Category1</NavLink>
-        <NavLink>Category1</NavLink>
-        <NavLink>Category1</NavLink>
-        <NavLink>Category1</NavLink>
+        <Category to="">Category</Category>
+        <Category to="">Category</Category>
+        <Category to="">Category</Category>
+        <Category to="">Category</Category>
       </div>
       <SearchCart>
-        <div>
-          <input type="search" value="text" placeholder="Activity tracker"/> 
-          <Link><AiOutlineSearch style={{fontSize: "25px" }}/></Link>
-        </div>
+        <Search>
+          <InputBox type="search" value="text" placeholder="Activity tracker"/> 
+          <SearchIcon><AiOutlineSearch style={{fontSize: "20px" }}/></SearchIcon>
+        </Search>
         <Link><AiOutlineShoppingCart style={{fontSize: "25px" }}/></Link>
       </SearchCart>
     </Container>
@@ -28,9 +28,35 @@ const Header = () => {
 const Container = styled.div`
 display: flex;
 justify-content: space-between ;
+align-items: center;
+border: 0.1rem solid black;
+padding: 0.3rem;
+`
+const Category = styled(NavLink)`
+text-decoration: none;
+margin: 2rem;
+
+&.active{
+
+}
 `
 const SearchCart = styled.div`
 display: flex;
+align-items: center;
+`
+const Search = styled.div`
+display: flex;
+align-items: center;
+border: 0.1rem solid black;
+margin-right: 1rem;
+`
+const InputBox = styled.input`
+height: 1.5rem;
+border: none;
+`
+const SearchIcon = styled.button`
+background-color: white;
+border: none;
 `
 
 
