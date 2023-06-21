@@ -1,6 +1,5 @@
 'use strict';
 const { MongoClient } = require("mongodb");
-const { v4: uuidv4 } = require('uuid');
 
 require("dotenv").config();
 const { MONGO_URI } = process.env;
@@ -10,26 +9,37 @@ const options = {
   useUnifiedTopology: true,
 };
 
-const functionName = async (request, response) => {
-
-  //if needed
-  const { something } = request.body;
-  //if needed
-  const { somethingElse } = request.params;
-
+const getUser = async (request, response) => {
   const client = new MongoClient(MONGO_URI, options);
-
-  try{
+  const _id  = parseInt(request.params._id);
+  try {
     await client.connect();
     const db = client.db("ecommerce");
-
-    const result = await db.collection("colection.Name").SOMEFUNCTION();
-
-    //SOME LOGIC
-    result
-        ? response.status(200).json({ status: 200, data: result })
-        : response.status(404).json({ status: 404, data: "Not Found" });
-  } catch(err) {err => console.log(err)}
-  finally { client.close()};
-
+    const singleUser = await db
+      .collection("users")
+      .findOne({ _id });
+    if (singleUser) {
+      return response
+        .status(200)
+        .json({ status: 200, data: singleUser });
+    } else {
+      return response
+        .status(404)
+        .json({ status: 404, message: `No user found with ${_id} id` });
+    }
+  } catch (error) {
+    console.error(`Internal error: ${error.stack}`);
+    response.status(500).json({
+      status: 500,
+      error: error.message,
+    });
+  } finally {
+    client.close();
+  }
 }
+
+module.exports = { getUser }
+
+//For server page
+  //get singleUser
+  // .get("/users/:_id", getUser)
