@@ -1,5 +1,5 @@
-const {companies} = require("./data/companies.json") 
-const {items} = require("./data/items.json")
+const companies = require("./data/companies.json") 
+const items = require("./data/items.json")
 
 
 const { MongoClient } = require("mongodb");
@@ -18,7 +18,7 @@ const batchImportCompanies = async () => {
     try {
       await client.connect();
   
-      const db = client.db("<ecommerceDBName>");
+      const db = client.db("ecommerce");
   
       const companiesImport = await db.collection("companies").insertMany(companies);
       console.log(companiesImport)
@@ -38,7 +38,7 @@ const batchImportCompanies = async () => {
     try {
       await client.connect();
   
-      const db = client.db("<ecommerceDBName>");
+      const db = client.db("ecommerce");
   
       const itemsImport = await db.collection("items").insertMany(items);
       console.log(itemsImport)
