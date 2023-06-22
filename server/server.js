@@ -58,7 +58,7 @@ express()
   
   .post("/api/cartcollection", cartCollection)
 
-  .post("/api/cart/updateCart", updateCart)
+  .post("/api/updatecart/:userId/:itemId/:quantitychange", updateCart)
 
 
 

@@ -11,21 +11,28 @@ const options = {
 
 const updateCart = async (req, res) => {
     
-    const { userId, itemId, quantityChange } = req.body;
+    const { userId, itemId, quantitychange } = req.params;
 
     const client = new MongoClient(MONGO_URI, options);
 
     try {
+
         await client.connect();
         const db = client.db('ecommerce');
 
-        const user = await db.collection("users").findOne({ _id: userId._id });
+        const user = await db.collection("users").findOne({ _id: userId });
 
-        console.log(user)
+        const stock = await db.collection("items").findOne({ _id: Number(itemId) });
 
-        const result = await db.collection("users").updateOne({ _id: userId._id, "cart._id": itemId._id }, { $set: { "cart.$.quantity": quantityChange } });
+        console.log(stock.numInStock);
 
-        res.status(200).json({ status: 200, data: result });
+        if (Number(quantitychange) <= Number(stock.numInStock)) {
+            const result = await db.collection("users").updateOne({ _id: userId, "cart._id": Number(itemId) }, { $set: { "cart.$.quantity": Number(quantitychange) } });
+            res.status(200).json({ status: 200, data: result });
+        } else {
+            res.status(400).json({ status: 400, message: "We do not have that many in stock" });
+        }
+
     } catch (err) {
         console.log(err);
         res.status(500).json({ error: 'Something went wrong.' });
