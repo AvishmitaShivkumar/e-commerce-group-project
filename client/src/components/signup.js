@@ -1,32 +1,40 @@
 import { styled } from "styled-components";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "./UserContext";
+
 
 const SignUp = () => {
   // useState used to keep the values of names, email and password to be used in the fetch POST
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const {currentUser, setCurrentUser} = useContext(UserContext)
 
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(currentUser) return navigate("/")
+  },[currentUser])
 
 // fetch (post) to push user info into database
 const handleSubmit = (event) => {
   event.preventDefault();
-  fetch("/signup", {
+  fetch("/api/signup", {
       method: "POST",
+      body: JSON.stringify({firstName, lastName, email, password}),
       headers: {
           "Accept": "application/json",
           "Content-Type": "application/json"
-      },
-      body: JSON.stringify(firstName, lastName, email, password)
+      }
   })
-      .then(res => res.json())
+      .then((response) => response.json())
       .then((parsed) => {
-        console.log(parsed)
-        if(parsed.status===201){
+        if(parsed.status===200){
+          console.log(parsed)
+          localStorage.setItem("user", JSON.stringify(parsed.userId))
           navigate("/signupconfirmation")
         }
       })
@@ -34,7 +42,6 @@ const handleSubmit = (event) => {
           window.alert(error)
       })
 }
-
 
     return (
         <>
@@ -58,7 +65,9 @@ const handleSubmit = (event) => {
                             Password:
                             <Input type="password" id="password" onChange={(e) => setPassword(e.target.value)}></Input>
                         </Label>
-                        <SignUpButton to="/signupconfirmation">Sign Up!</SignUpButton>
+                        <ButtonDiv>
+                          <SignUpButton>Sign Up!</SignUpButton>
+                        </ButtonDiv>
                     </Form>
                 </FormBox>
             </Container>
@@ -69,14 +78,16 @@ const handleSubmit = (event) => {
 export default SignUp;
 
 const Container = styled.section`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const Form = styled.form`
 display: flex;
 flex-direction: column;
+
 `
 
 const FormBox = styled.div`
@@ -95,7 +106,7 @@ margin: 1rem 0;
 const SignUpTitle = styled.h1`
 font-size: 4rem;
 text-align: center;
-margin:0;
+margin: 2rem;
 `
 
 const Input = styled.input`
@@ -104,10 +115,24 @@ margin: 1rem;
 width: 35rem;
 `
 
-const SignUpButton = styled(Link)`
+const SignUpButton = styled.button`
 color:black;
 font-size: 3rem;
 text-align: center;
 text-decoration: none;
 margin: 0;
+width: 15rem;
+height: 7rem;
+border-radius: 2rem;
+
+&:hover{
+  background-color: red;
+}
+
+transition: ease-in-out 0.2s;
+`
+const ButtonDiv = styled.div`
+margin: 3rem;
+display: flex;
+justify-content: center;
 `
