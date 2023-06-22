@@ -42,4 +42,4 @@ module.exports = { getItem }
 
 //For server page
   //get singleItem
-  // .get("/itemscatalogue/:_id", getItem)
+  // .get("/item/:_id", getItem)
