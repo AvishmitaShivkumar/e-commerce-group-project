@@ -10,7 +10,7 @@ const options = {
 };
 
 const updatePassword = async (request, response) => {
-
+  const { email, password, newPassword } = request.body;
 
   const client = new MongoClient(MONGO_URI, options);
 
