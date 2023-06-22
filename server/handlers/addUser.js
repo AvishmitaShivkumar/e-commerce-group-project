@@ -74,6 +74,3 @@ const addUser = async (request, response) => {
 
 
 module.exports = { addUser }
-
-//for the server
-// .post("/signup/", addUser)

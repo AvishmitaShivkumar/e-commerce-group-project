@@ -10,7 +10,7 @@ const options = {
   useUnifiedTopology: true,
 };
 
-const getitems = async (request, response) => {
+const getItems = async (request, response) => {
 
   const client = new MongoClient(MONGO_URI, options);
 
@@ -28,4 +28,4 @@ const getitems = async (request, response) => {
 
 }
 
-module.exports = getitems
+module.exports = getItems

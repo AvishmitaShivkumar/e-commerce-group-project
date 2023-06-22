@@ -1,6 +1,5 @@
 'use strict';
 const { MongoClient } = require("mongodb");
-const { v4: uuidv4 } = require('uuid');
 
 require("dotenv").config();
 const { MONGO_URI } = process.env;
@@ -21,7 +20,6 @@ const getUsers = async (request, response) => {
 
     // Find method chained with toArray to get all the users found in our database
     const users = await db.collection("users").find().toArray();
-    console.log(users)
 
     //If users are never found, the server will respond. If found, the data will be a list of all users found in database
     users
@@ -32,10 +30,3 @@ const getUsers = async (request, response) => {
 }
 
 module.exports = getUsers
-
-
-
-// code for server.js
-// const getUsers = require('./handlers/getusers')
-// .get("/users", getUsers)
-// 

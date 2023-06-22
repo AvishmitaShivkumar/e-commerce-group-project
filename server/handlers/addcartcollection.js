@@ -24,8 +24,6 @@ const cartCollection = async (request, response) => {
 
     const user = await db.collection("users").findOne({ _id: userId._id });
 
-    console.log(user)
-
     if (user && user.cart.some(item => item._id === items._id)) {
       const result = await db.collection("users").updateOne({ _id: userId._id, "cart._id": items._id }, { $inc: { "cart.$.quantity": 1 } });
       response.status(200).json({ status: 200, data: result });

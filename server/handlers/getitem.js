@@ -39,7 +39,3 @@ const getItem = async (request, response) => {
 }
 
 module.exports = { getItem }
-
-//For server page
-  //get singleItem
-  // .get("/item/:_id", getItem)

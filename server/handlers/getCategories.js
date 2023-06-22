@@ -39,6 +39,3 @@ const getCategories = async (request, response) => {
 
 
 module.exports = { getCategories }
-
-//for the server
-// .get("/api/allcategories", getCategories )

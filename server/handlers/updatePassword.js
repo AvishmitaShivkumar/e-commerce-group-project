@@ -49,7 +49,3 @@ const updatePassword = async (request, response) => {
 }
 
 module.exports = { updatePassword }
-
-
-//for Server
-// .patch("/user/updatepassword",updatePassword )

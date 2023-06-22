@@ -11,7 +11,7 @@ const options = {
 
 const getUser = async (request, response) => {
   const client = new MongoClient(MONGO_URI, options);
-  const _id  = parseInt(request.params._id);
+  const _id  = request.params._id;
   try {
     await client.connect();
     const db = client.db("ecommerce");
@@ -40,6 +40,3 @@ const getUser = async (request, response) => {
 
 module.exports = { getUser }
 
-//For server page
-  //get singleUser
-  // .get("/users/:_id", getUser)
