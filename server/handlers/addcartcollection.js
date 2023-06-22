@@ -6,43 +6,49 @@ require("dotenv").config();
 const { MONGO_URI } = process.env;
 
 const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 };
 
 const cartCollection = async (request, response) => {
-  //if needed
-  const { userId, items } = request.body;
-  //if needed
-  // const { somethingElse } = request.params;
+    //if needed
+    const { userId, items } = request.body;
+    //if needed
+    // const { somethingElse } = request.params;
 
-  const client = new MongoClient(MONGO_URI, options);
+    const client = new MongoClient(MONGO_URI, options);
 
-  try {
-    await client.connect();
-    const db = client.db("ecommerce");
+    try {
+        await client.connect();
+        const db = client.db("ecommerce");
 
-    const user = await db.collection("users").findOne({ _id: userId._id });
+        const user = await db.collection("users").findOne({ _id: userId._id });
 
-    if (user && user.cart.some(item => item._id === items._id)) {
-      const result = await db.collection("users").updateOne({ _id: userId._id, "cart._id": items._id }, { $inc: { "cart.$.quantity": 1 } });
-      response.status(200).json({ status: 200, data: result });
-    } else {
-      const result = await db.collection("users").updateOne({ _id: userId._id}, { $push: { cart: { ...items, quantity: 1 } } })
+        const updateStock = await db.collection("items").updateOne({ _id: items._id },{ $inc: { numInStock: -1 } });
+
+        const stock = await db.collection("items").findOne({ _id: items._id });
+
+
+        if (user && user.cart.some(item => item._id === items._id)) {
+            if (stock.numInStock === 0) {
+            response.status(400).json({ error: "Sorry, we don't have that many in stock." });
+        } else {
+            const result = await db.collection("users").updateOne({ _id: userId._id, "cart._id": items._id }, { $inc: { "cart.$.quantity": 1 } });
+            response.status(200).json({ status: 200, data: result });
+        }
+        } else {
+            const result = await db.collection("users").updateOne({ _id: userId._id}, { $push: { cart: { ...items, quantity: 1 } } })
+            response.status(200).json({ status: 200, data: result });
+        }
+
+
+    } catch (err) {
+        (err) => console.log(err);
+    } finally {
+        client.close();
     }
-
-    result
-      ? response.status(200).json({ status: 200, data: result })
-      : response.status(404).json({ status: 404, data: "Not Found" });
-  } catch (err) {
-    (err) => console.log(err);
-  } finally {
-    client.close();
-  }
 };
 
 module.exports = cartCollection
 
-//.post("/api/cartcollection", cartCollection)
-//const cartCollection = require('./handlers/addcartcollection');
 
