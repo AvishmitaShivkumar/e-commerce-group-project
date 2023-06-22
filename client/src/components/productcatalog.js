@@ -1,43 +1,41 @@
 import styled from "styled-components"
 import { useParams, Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { InventoryContext } from "./InventoryContext";
 
 const ProductCatalog = () => {
   const { category } = useParams();
-  const [ items, setItems ] = useState("");
+  const  { allItems } = useContext(InventoryContext);
 
   // fetches the items in the category and stores it in state
-  useEffect(() => {
-    fetch("endpoint goes here")
-    .then(response => response.json())
-    .then(parsed => {
-      console.log(parsed);
-      // setItems(parsed.something)
-    })
-    .catch((error) => {
-      console.error(error)
-    });
-  }, []);
+
+  // filters allItems and returns only those that match the category
+const itemsByCategory = allItems.filter((item) => {
+    if(item.category === category) {
+      return item;
+    }
+  });
 
   return (
-    <></>
-  //   {!items ? <h1>Loading...</h1> :
-  //   <Container>
-  //     <h1>{category}</h1>
-  //     {/*  map through array of items in the category and return product image, name and price in a Link that redirects to individual product page */}
-  //     {/* {
-  //       items.map((item) => {
-  //         <Link>
-  //           <img src="itemSrc"/>
-  //           <p>product name</p>
-  //           <p>price</p>
-  //         </Link>
-  //       })
-  //     } */}
-  // </Container>
-  //   }
+    <>
+    {!allItems ? <h1>Loading...</h1> :
+    <Container>
+      <h1>{category}</h1>
+      {/*  map through array of items in the category and return product image, name and price in a Link that redirects to individual product page */}
+      {
+        itemsByCategory.map((item) => {
+          return (
+          <Link>
+            <img src={item.imageSrc}/>
+            <p>{item.name}</p>
+            <p>{item.price}</p>
+          </Link>)
+        })
+      }
+    </Container>
+    }
+    </>
   )
-
 }
 
 const Container = styled.div`
