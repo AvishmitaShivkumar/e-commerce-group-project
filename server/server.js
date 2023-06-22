@@ -6,13 +6,14 @@ const { getCategories } = require("./handlers/getCategories");
 const getCompanies = require("./handlers/getCompanies");
 const getCompany = require("./handlers/getCompany");
 const { getItem } = require("./handlers/getItem");
-const getItems = require("./handlers/getItems");
+const getItems = require("./handlers/getitems");
 const getUsers = require("./handlers/getUsers");
 const { getUser } = require("./handlers/getUser");
 const { updatePassword } = require("./handlers/updatePassword");
 const { addUser } = require("./handlers/addUser");
 const deleteCartItem = require("./handlers/deletesingleitem");
 const cartCollection = require("./handlers/addcartcollection");
+const updateCart = require("./handlers/cartquantitychange");
 
 const PORT = 4000;
 
@@ -57,6 +58,7 @@ express()
   
   .post("/api/cartcollection", cartCollection)
 
+  .post("/api/cart/updateCart", updateCart)
 
 
 
