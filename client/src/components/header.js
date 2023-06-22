@@ -4,29 +4,32 @@ import { Link, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Header = () => {
-  const [ categories, setCategories ] = useState();
+  const [ categories, setCategories ] = useState("");
 
   // fetches the categories and stores it in state
   useEffect(() => {
-    fetch("category endpoint goes here")
+    fetch("/api/allcategories")
     .then(response => response.json())
     .then(parsed => {
-      console.log(parsed)
-      // setCategories(parsed.something)
+      setCategories(parsed.data)
     })
   }, []);
 
   return (
+    <>
+    {!categories ? <h1>Loading</h1> :
     <Container>
       <h1>Logo</h1>
       <div>
-        {/* likely need to change contents of this div to map over categories and return each name */}
-        <Category to="">Category</Category>
-        <Category to="">Category</Category>
-        <Category to="">Category</Category>
-        <Category to="">Category</Category>
+      {/* maps through categories and returns a NavLink for each one */}
+        {categories.map((category) => {
+          return(
+            <Category key={category} to={`/catalog/${category}`}>{category}</Category>
+          )
+        })}
       </div>
       <SearchCart>
+        <NavLink>Sign in</NavLink>
         <Search>
           <InputBox type="search" value="text" placeholder="Activity tracker"/> 
           <SearchIcon><AiOutlineSearch style={{fontSize: "20px" }}/></SearchIcon>
@@ -34,6 +37,8 @@ const Header = () => {
         <Link><AiOutlineShoppingCart style={{fontSize: "25px" }}/></Link>
       </SearchCart>
     </Container>
+    }
+    </>
   )
 
 }
