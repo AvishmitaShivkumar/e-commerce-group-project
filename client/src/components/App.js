@@ -13,6 +13,7 @@ import SignIn from './signin';
 import SignUp from './signup';
 import GlobalStyles from './globalstyles';
 import ContactSupport from "./contact";
+import SignUpConfirmation from "./SignUpConfirmation";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
                 <Route path="/searchpage" element={<SearchPage />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/signupconfirmation" element={<SignUpConfirmation />}
                 <Route path="/contactsupport" element={<ContactSupport/>}/>
                 <Route path="*" element={<Error />} />
             </Routes>
