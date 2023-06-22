@@ -1,23 +1,72 @@
 import { styled } from "styled-components"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useState, useEffect, useContext } from "react";
+
 
 const SignIn = () => {
+
+
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("")
+
+  const [data, setData] = useState({})
+
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    fetch("/api/users")
+    .then((response)=>response.json())
+    .then((parsed)=>{
+      console.log(parsed.data)
+      setData(parsed.data)
+    })
+  },[])
+
+let _id = null
+const handleClick = ((event)=>{
+  event.preventDefault();
+
+  if(password !== "" && email !== ""){
+  const foundUser = data.find((user)=>{
+    return password === user.password && email === user.email
+  })
+  _id = foundUser._id
+}
+
+fetch(`/api/user/${_id}`)
+  .then((response) => response.json())
+  .then((parsed) => {
+    if(parsed.status === 200){
+      localStorage.setItem("user", JSON.stringify(parsed.data._id))
+      console.log(parsed.data)
+      navigate("/")
+    }
+    })
+  .catch((error) => {
+      window.alert(error)
+  })
+
+
+})
+
+
+// fetch (post) to push user info into database
 
     return (
         <>
             <Container>
                 <FormBox>
-                    <Form>
-                        <SignInTitle>Sign in to start adding items to your cart</SignInTitle>
+                    <Form onSubmit={handleClick}>
+                        <SignInTitle>Sign in to start shopping!</SignInTitle>
                         <Label>
-                            Username: 
-                            <Input type="text"></Input>
+                            Email: 
+                            <Input type="text" onChange={(event)=>setEmail(event.target.value)}></Input>
                         </Label>
                         <Label>
                             Password:
-                            <Input type="password"></Input>
+                            <Input type="password" onChange={(event)=>setPassword(event.target.value)}></Input>
                         </Label>
-                        <SignInButton to="/SignUp">Sign In!</SignInButton>
+                        <SignInButton>Sign In!</SignInButton>
                     </Form>
                     <SignUpTitle>Don't have an account?</SignUpTitle>
                     <SignUpButton to="/signup">Sign Up!</SignUpButton>
@@ -26,6 +75,7 @@ const SignIn = () => {
         </>
     )
 }
+
 
 export default SignIn;
 
@@ -69,7 +119,7 @@ font-size: 3rem;
 text-align: center;
 margin: 0;
 `
-const SignInButton = styled(Link)`
+const SignInButton = styled.button`
 color: black;
 font-size: 2rem;
 text-decoration: none;
