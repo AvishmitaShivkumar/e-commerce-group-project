@@ -21,21 +21,22 @@ const Header = () => {
       {!categories ? <h1>Loading</h1> :
         <>
     <Container>
-      <h1>Logo</h1>
+      <NavLink to="/">Logo</NavLink>
+      <NavLink to="/">Site name</NavLink>
       <SearchCart>
-        <NavLink>Sign in</NavLink>
+        <NavLink to="/signin">Sign in</NavLink>
         <SearchBar/>
-        <Link><AiOutlineShoppingCart style={{fontSize: "25px" }}/></Link>
+        <Link to="/cart"><AiOutlineShoppingCart style={{fontSize: "25px" }}/></Link>
       </SearchCart>
         </Container>
-         <div>
+          <div>
          {/* maps through categories and returns a NavLink for each one */}
-           {categories.map((category) => {
-             return(
-               <Category key={category} to={`/catalog/${category}`}>{category}</Category>
-             )
-           })}
-         </div>
+            {categories.map((category) => {
+              return(
+                <Category key={category} to={`/catalog/${category}`}>{category}</Category>
+              )
+            })}
+          </div>
         </>
     }
     </>
