@@ -26,10 +26,10 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
-                <Route path="/companypage" element={<CompanyPage />} />
+                <Route path="/company/:_id" element={<CompanyPage />} />
                 <Route path="/confirmation" element={<Confirmation />} />
                 <Route path="/catalog/:category" element={<ProductCatalog />} />
-                <Route path="/productpage" element={<ProductPage />} />
+                <Route path="/products/:product" element={<ProductPage />} />
                 <Route path="/searchpage" element={<SearchPage />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
@@ -38,7 +38,6 @@ function App() {
                 <Route path="*" element={<Error />} />
             </Routes>
         </BrowserRouter>
-
   )
   
 }

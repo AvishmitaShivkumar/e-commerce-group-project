@@ -2,12 +2,11 @@ import styled from "styled-components"
 import { useParams, Link } from "react-router-dom";
 import { useContext } from "react";
 import { InventoryContext } from "./InventoryContext";
+import Loader from "./Loader";
 
 const ProductCatalog = () => {
   const { category } = useParams();
   const  { allItems } = useContext(InventoryContext);
-
-  // fetches the items in the category and stores it in state
 
   // filters allItems and returns only those that match the category
 const itemsByCategory = allItems.filter((item) => {
@@ -18,14 +17,14 @@ const itemsByCategory = allItems.filter((item) => {
 
   return (
     <>
-    {!allItems ? <h1>Loading...</h1> :
+    {!allItems ? <Loader/> :
     <Container>
       <h1>{category}</h1>
       {/*  map through array of items in the category and return product image, name and price in a Link that redirects to individual product page */}
       {
         itemsByCategory.map((item) => {
           return (
-          <Link>
+          <Link to={`/products/${item._id}`} key={item._id}>
             <img src={item.imageSrc}/>
             <p>{item.name}</p>
             <p>{item.price}</p>
