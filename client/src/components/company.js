@@ -11,8 +11,6 @@ const CompanyPage = () => {
   const [companyInfo, setcompanyInfo] = useState(undefined);
   const { allItems } = useContext(InventoryContext)
   const [filteredItems, setFilteredItems] = useState([]);
-  console.log("🚀 ~ file: company.js:14 ~ CompanyPage ~ filteredItems:", filteredItems)
-
 
   useEffect(() => {
     fetch(`/api/company/${_id}`)
