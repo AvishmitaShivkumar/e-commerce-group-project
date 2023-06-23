@@ -127,7 +127,7 @@ const SearchBar = () => {
         onKeyDown={handleKeyDown}
       />
       {isMenuVisible && value.length > 1 && matchedItems.length !== 0 && (
-        <Suggestions ref={suggestionsRef}   isVisible={isMenuVisible}     >
+        <Suggestions ref={suggestionsRef}      >
           {/* for each single company it is going to render a header and a list with the filter of the company  */}
           {matchedUniqueCompanies.map((company) => {
             return (
@@ -205,11 +205,6 @@ const Suggestions = styled.div`
   top: 2.1rem;
   right:2.9rem;
   background-color: white;
-
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-  opacity: ${(props) => (props.isVisible ? "1" : "0")};
-  transform: ${(props) => (props.isVisible ? "scaleY(1)" : "scaleY(0)")};
-  transform-origin: top;
 `;
 
 const Subtitle = styled.li`
