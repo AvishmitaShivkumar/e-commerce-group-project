@@ -1,17 +1,36 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { AiOutlineSearch } from "react-icons/ai";
 import { InventoryContext } from "./InventoryContext";
+import { useNavigate } from 'react-router-dom';
+
 
 const SearchBar = () => {
   const [value, setValue] = useState("");
-  //   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0);
+    const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0);
   const [isMenuVisible, setIsMenuVisible] = useState(true);
   const { allItems, allCompanies } = useContext(InventoryContext);
 
-  const matchedItems = allItems.filter((item) =>
+   // Reference to the suggestions list
+  const suggestionsRef = useRef(null);
+
+    
+  const unsortedMatchedItems = allItems.filter((item) =>
     item.name.toLowerCase().includes(value.toLowerCase())
   );
+    
+  const matchedItems = unsortedMatchedItems.sort((a, b) => {
+    const companyA = a.companyId;
+    const companyB = b.companyId;
+  
+    if (companyA < companyB) {
+      return -1;
+    } else if (companyA > companyB) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
 
   const matchedCompanies = matchedItems.map((item) =>
     allCompanies.find((company) => company._id === item.companyId)
@@ -26,6 +45,74 @@ const SearchBar = () => {
     return { firstHalf, secondHalf };
   };
 
+  const navigate = useNavigate();
+  const handleClickItem=(item) => {
+      navigate(`/products/${item}`);
+      setIsMenuVisible(false)
+  }
+    
+    //arrows up and down have 2 conditions, the value length is 2 or more, the menu is visible to change the index.
+  //the index is changed only if the index is not the first or the last one, otherwise it stays the same
+  const handleKeyDown = (event) => {
+    switch (event.key) {
+      case "Enter": {
+        const selectedItem = matchedItems[selectedSuggestionIndex];
+        handleClickItem(selectedItem._id);
+        break;
+      }
+      case "ArrowUp": {
+        event.preventDefault();
+        if (value.length >= 2 && isMenuVisible) {
+          setSelectedSuggestionIndex(
+            selectedSuggestionIndex >= 1 ? selectedSuggestionIndex - 1 : 0
+          );
+        }
+        break;
+      }
+      case "ArrowDown": {
+        event.preventDefault();
+        if (value.length >= 2 && isMenuVisible) {
+          setSelectedSuggestionIndex(
+            selectedSuggestionIndex < matchedItems.length - 2
+              ? selectedSuggestionIndex + 1
+              : matchedItems.length - 1
+          );
+        }
+        break;
+        }
+        case "Escape": {
+            setIsMenuVisible(false);
+            break;
+          }
+        //this is just depending if its windows or mac, on mac they behave the same way these 2 key names
+      case "Delete":
+        case "Backspace": {
+            setSelectedSuggestionIndex(0);
+            if (!value) {
+                setIsMenuVisible(false);
+              }
+          break;
+        }
+        default:
+          break;
+      }
+  };
+    
+  useEffect(() => {
+    // Scroll the suggestions list to bring the selected suggestion into view
+    if (suggestionsRef.current) {
+      const selectedSuggestion = suggestionsRef.current.querySelector(
+        "li.selected"
+      );
+      if (selectedSuggestion) {
+        selectedSuggestion.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }
+    }
+  }, [selectedSuggestionIndex]);
+    
   return (
     <Search>
       <InputBox
@@ -34,38 +121,32 @@ const SearchBar = () => {
         value={value}
         onChange={(event) => {
           setValue(event.target.value);
-          //added condition to make the menu visible again after the user types another letter when menu is invisible
+          //condition to make the menu visible again after the user types another letter when menu is invisible
           setIsMenuVisible(true);
         }}
-        //   onKeyDown={(event) => {
-        //     handleKeyDown(event);
-        //   }}
+        onKeyDown={handleKeyDown}
       />
       {isMenuVisible && value.length > 1 && matchedItems.length !== 0 && (
-        <Suggestions isVisible={isMenuVisible}>
+        <Suggestions ref={suggestionsRef}   isVisible={isMenuVisible}     >
           {/* for each single company it is going to render a header and a list with the filter of the company  */}
           {matchedUniqueCompanies.map((company) => {
             return (
               <div key={company._id}>
                 <Subtitle>By {company.name}:</Subtitle>
                 <ul>
-                  {matchedItems.map((item) => {
+                  {matchedItems.map((item, index) => {
                     if (item.companyId === company._id) {
                       const { firstHalf, secondHalf } = getHighlightedText(
                         item.name
                       );
-                      // const isSelected =
-                      // matchedSuggestions[selectedSuggestionIndex] ===
-                      // suggestion;
+                      const isSelected =
+                      matchedItems[selectedSuggestionIndex] === item;
                       return (
-                        <Suggestion
-                        // style={{
-                        //   background: isSelected
-                        //     ? "hsla(50deg, 100%, 80%, 0.25)"
-                        //     : "transparent",
-                        // }}
-                        // onClick={() => handleSelect(suggestion.title)}
-                        // onMouseEnter={() => setSelectedSuggestionIndex(index)}
+                          <Suggestion
+                          key={`${item._id}${company._id}`}
+                          className={isSelected ? 'selected' : ''}
+                          onClick={() => handleClickItem(item._id)}
+                          onMouseEnter={() => setSelectedSuggestionIndex(index)}
                         >
                           <span>
                             {firstHalf}
@@ -76,6 +157,7 @@ const SearchBar = () => {
                         </Suggestion>
                       );
                     }
+                      return null
                   })}
                 </ul>
               </div>
@@ -109,21 +191,25 @@ const SearchIcon = styled.button`
   border: none;
 `;
 
-const Suggestions = styled.ul`
+const Suggestions = styled.div`
   width: 400px;
-  margin: 5px;
-  padding: 10px;
   border-radius: 5px;
   border-width: 1px;
   border-style: solid;
   border-color: #ccc;
   box-shadow: 5px 5px #ccc;
-  display: ${(props) => (props.isVisible ? "block" : "none")};
   position: absolute;
-  height:350px;
+  max-height:350px;
   overflow-y: scroll;
-  top: 30px;
-  right:50px
+  overflow-x: hidden;
+  top: 2.1rem;
+  right:2.9rem;
+  background-color: white;
+
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  opacity: ${(props) => (props.isVisible ? "1" : "0")};
+  transform: ${(props) => (props.isVisible ? "scaleY(1)" : "scaleY(0)")};
+  transform-origin: top;
 `;
 
 const Subtitle = styled.li`
@@ -134,11 +220,11 @@ const Subtitle = styled.li`
 `;
 
 const Suggestion = styled.li`
-  padding: 10px;
+  padding: 15px 10px;
   width: 100%;
   border-radius: 5px;
-  &:focus {
-    background-color: lightyellow;
+  &.selected {
+    background-color: hsla(50deg, 100%, 80%, 0.25);
   }
 `;
 const Prediction = styled.span`
