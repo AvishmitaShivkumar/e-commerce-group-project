@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <>
       {!categories ? <h1>Loading</h1> :
-        <>
+        <Wrapper>
     <Container>
       <StyledNavlink to="/">Logo</StyledNavlink>
       <TitleNavlink to="/">Wearables </TitleNavlink>
@@ -37,12 +37,18 @@ const Header = () => {
               )
             })}
           </CategoryContainer>
-        </>
+        </Wrapper>
     }
     </>
   )
 
 }
+
+const Wrapper = styled.div`
+position: sticky;
+top: 0;
+width: 100vw;
+`
 
 const StyledNavlink = styled(NavLink)`
 color: white;
@@ -68,6 +74,7 @@ const CategoryContainer = styled.div`
 padding: 1rem 0;
 display: flex;
 justify-content: center;
+background-color: white;
 `
 
 const Container = styled.div`
@@ -85,12 +92,11 @@ color: var(--color-navy);
 &.active{
 font-weight: bold;
 color: var(--color-marigold);
+font-size: 1.5rem;
 }
-
 &:hover{
 opacity: .5;
 }
-
 `
 const SearchCart = styled.div`
 display: flex;

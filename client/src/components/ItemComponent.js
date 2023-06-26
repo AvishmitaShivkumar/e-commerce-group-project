@@ -30,12 +30,15 @@ const ItemContainer = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr;
   align-items: center;
-  max-width: 800px;
-    margin: auto;
+  max-width: 50vw;
     margin-top: 5rem;
-`;
+padding: 2em;
+box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;`;
+
+
 const BigImage = styled.img`
-  height: 400px;
+  width: 25vw;
+  overflow: hidden;
   grid-area: 1 / 1 / span 2;
   top: 0;
   margin-right: 50px;
@@ -57,6 +60,7 @@ const InformationContainer = styled.div`
   display: grid;
   text-align: left;
   justify-self: flex-start;
+  width: 25vw;
 `;
 
 const BoldParagraph = styled.p`
@@ -67,7 +71,7 @@ const Button = styled.button`
   background-color: var(--color-navy);
   padding: 20px 40px;
   margin-top: 1em;
-  width: 300px;
+  width: 10em;
   border-radius: 10px;
   color: white;
   font-size: x-large;
@@ -84,3 +88,5 @@ const Button = styled.button`
     cursor: not-allowed;
   }
 `;
+
+export {BoldParagraph}

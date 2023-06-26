@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Loader from "./Loader";
-import ItemComponent from "./ItemComponent";
+import ItemComponent, { NameContainer } from "./ItemComponent";
 import { InventoryContext } from "./InventoryContext";
 
 
@@ -39,17 +39,18 @@ const CompanyPage = () => {
       ) : (
           <>
           <HeaderContainer>
-              <h1>{companyInfo.name}</h1>
+              <Title>{companyInfo.name}</Title>
               {/* Not using the url so customers shop with us instead :) */}
               {/* <h2>{companyInfo.url}</h2> */}
               <h2>Company located in {companyInfo.country}</h2>
-              <p>Company description : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua.</p>
+              <p>Company description :  Here we can have the description of the company.</p>
             </HeaderContainer>
 
-          {filteredItems.map((item) => (
+            <ItemsContainer>
+            {filteredItems.map((item) => (
             <ItemComponent key={item._id} oneItem={item} company={companyInfo} />
-          ))}
+            ))}
+            </ItemsContainer>
             
         </>
       )}
@@ -61,11 +62,22 @@ const HeaderContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
         font-size:1.5rem;
-        color:#757;
         text-align: center;
-
+  margin: 2rem;
 `;
+
+const Title = styled.h1`
+    font-size:3rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+`
+const ItemsContainer = styled.div`
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 2em; 
+max-width: 100vw;
+min-width: 100vw;
+`
 
 export default CompanyPage;

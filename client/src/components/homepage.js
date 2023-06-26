@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { InventoryContext } from "./InventoryContext";
 import { useContext, useEffect, useState} from "react";
 import Loader from "./Loader";
-import StarImage from "./Images/Star.png"
 import { Link } from "react-router-dom";
 import { AiOutlineStar } from "react-icons/ai";
 
@@ -194,27 +193,6 @@ text-decoration: none;
 color:var(--color-ocean);
 `
 
-// const RightLower = styled(Link)`
-// text-align: center;
-// margin-top: 2rem;
-// width: 25%;
-// height: 25rem;
-// border: 0.25rem solid var(--color-blush);
-// border-radius: 1rem;
-// text-decoration: none;
-// color:black;
-// `
-
-// const MiddleLower = styled(Link)`
-// text-align: center;
-// margin-top: 2rem;
-// width: 25%;
-// height: 25rem;
-// border: 0.25rem solid var(--color-ocean);
-// border-radius: 1rem;
-// text-decoration: none;
-// color:black;
-// `
 
 const BottomDiv = styled.div`
 height: 20rem;
