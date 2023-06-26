@@ -14,6 +14,8 @@ const { addUser } = require("./handlers/addUser");
 const deleteCartItem = require("./handlers/deletesingleitem");
 const cartCollection = require("./handlers/addcartcollection");
 const updateCart = require("./handlers/cartquantitychange");
+const checkOut = require("./handlers/checkout");
+const { getUserCart } = require("./handlers/getusercart");
 
 const PORT = 4000;
 
@@ -48,7 +50,9 @@ express()
 
   .get("/api/users", getUsers)
 
-  .get("/api/user/:_id", getUser)
+  .get("/api/user/:userId", getUser)
+
+  .get("/api/cart/:userId/:itemId", getUserCart)
 
   .patch("/api/user/updatepassword", updatePassword)
 
@@ -60,6 +64,6 @@ express()
 
   .post("/api/updatecart/:userId/:itemId/:quantitychange", updateCart)
 
-
+  .post("/api/checkout", checkOut)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));

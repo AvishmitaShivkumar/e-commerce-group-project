@@ -4,28 +4,22 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
-  // const { item_id } = useParams();
-  // const [ordered, setOrdered] = useState(null);
-  const navigate = useNavigate();
+  const { itemId } = useParams();
+  const [ordered, setOrdered] = useState(null);
 
-  // useEffect(() => {
-  //   fetch(`/cart/${item_id}`)
-  //     .then((res) => res.json())
-  //     .then((parsed) => {
-  //       setOrdered(parsed.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error;
-  //     });
-  // }, []);
+  const user = localStorage.getItem("user")
+  const userId = JSON.parse(user);
+  
+  const navigate = useNavigate();
 
   const initialValue = {
     fname: "",
     lname: "",
     address: "",
     address2: "",
-    email: "",
-    phone: "",
+    postalCode: "",
+    // email: "",
+    // phone: "",
     creditNum: "",
     nameOnCard: "",
     expDate: "",
@@ -41,14 +35,70 @@ const Checkout = () => {
     console.log(newData);
   };
 
+
+
+  //In this post we want to post the USER data, make sure its called user, all you have to pass is the userId
+  //In this post we want to pass the ITEM data, this will pass the item Id
+  //and then COMPANIES all you have to pass is the company Id
+  //and then SHIPPING which you can pass all of the shipping data
+
+  //{
+  // 	"user": {
+  // 		"_id": "ec7c693d-9a85-4176-a75d-9fb4d1fb1b6c"
+  // 	},
+    
+  //   "items":
+  //     {
+  //       "_id": 6543
+  //     },
+    
+  // 	"companies":
+  //     {
+  //       "_id": 19962
+  //     },
+  // 		"shipping":
+  //     	{
+  //       	"address": "1 rue street",
+  // 				"postalCode": "APO STA"
+  //     	}
+  // }
+
+  //this will change later replace 6543 with the ${itemId}
+
+  useEffect(() => {
+    fetch(`/api/cart/${userId}/6543`)
+      .then((res) => res.json())
+      .then((parsed) => {
+        setOrdered(parsed.data);
+      })
+      .catch((error) => {
+        console.error(error)
+      });
+  }, []);
+
+  console.log(ordered)
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const body = {
-      order: formData,
+      user: {
+        _id: userId,
+      },
+      items: {
+        _id: ordered.itemId,
+      },
+      // companies: {
+      //   _id: companyId, // Replace with the actual company ID
+      // },
+      shipping: {
+        address: formData.address,
+        address2: formData.address2,
+        postalCode: formData.postalCode
+      },
     };
 
-    fetch("/orders", {
+    fetch("/api/checkout", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -63,6 +113,8 @@ const Checkout = () => {
         }
       });
   };
+
+  console.log(formData)
 
   return (
     <Container onSubmit={handleSubmit}>
@@ -135,6 +187,18 @@ const Checkout = () => {
             />
           </InputContainer>
           <InputContainer>
+            <Label htmlFor="address2">Postal code:</Label>
+            <Input
+              onChange={handleChange}
+              value={formData.postalcode}
+              type="text"
+              id="postalcode"
+              name="postalcode"
+              placeholder="A0A 0A0"
+              required
+            />
+          </InputContainer>
+          {/* <InputContainer>
             <Label htmlFor="email">E-mail:</Label>
             <Input
               onChange={handleChange}
@@ -157,7 +221,7 @@ const Checkout = () => {
               placeholder="111-111-1111"
               required
             />
-          </InputContainer>
+          </InputContainer> */}
         </Form>
 
         <Form>
@@ -233,7 +297,7 @@ const DivLeft = styled.div`
   float: left;
 `;
 
-const Container = styled.form`
+const Container = styled.div`
   margin-top: 50px;
   margin-left: 100px;
   margin-right: 100px;

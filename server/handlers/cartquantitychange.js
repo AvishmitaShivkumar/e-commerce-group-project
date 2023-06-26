@@ -24,8 +24,6 @@ const updateCart = async (req, res) => {
 
         const stock = await db.collection("items").findOne({ _id: Number(itemId) });
 
-        console.log(stock.numInStock);
-
         if (Number(quantitychange) <= Number(stock.numInStock)) {
             const result = await db.collection("users").updateOne({ _id: userId, "cart._id": Number(itemId) }, { $set: { "cart.$.quantity": Number(quantitychange) } });
             res.status(200).json({ status: 200, data: result });
