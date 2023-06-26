@@ -17,7 +17,6 @@ const updateCart = require("./handlers/cartquantitychange");
 const checkOut = require("./handlers/checkout");
 const { getUserCart } = require("./handlers/getusercart");
 const { getOrder } = require("./handlers/getOrder");
-const checkOut = require("./handlers/checkout");
 
 
 const PORT = 4000;
