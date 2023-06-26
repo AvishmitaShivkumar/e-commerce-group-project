@@ -3,6 +3,7 @@ import { InventoryContext } from "./InventoryContext";
 import { useContext, useEffect, useState} from "react";
 import Loader from "./Loader";
 import StarImage from "./Images/Star.png"
+import { Link } from "react-router-dom";
 
 
 const HomePage = () => {
@@ -68,23 +69,24 @@ console.log(medicalCategory)
         </Middle>
         <Right>
           <ItemOriginalPrice>{randomItem.price}</ItemOriginalPrice>
-          <Star src={StarImage}/> 
+          <Star src={StarImage}/>
+          {/* // Image by Clker-Free-Vector-Images from Pixabay */}
         </Right>
       </UpperBanner>
       <LowerBanner>
-        <LeftLower>
+        <LeftLower to={"/catalog/Fitness"}>
           <BottomDiv>
             <CategoryTitle>Fitness</CategoryTitle>
             {fitnessCategory && <CategoryImage src={fitnessCategory.imageSrc}/>}
           </BottomDiv>
         </LeftLower>
-        <MiddleLower>
+        <MiddleLower to={"/catalog/Medical"}>
           <BottomDiv>
             <CategoryTitle>Medical</CategoryTitle>
             {medicalCategory && <CategoryImage src={medicalCategory.imageSrc}/>}
           </BottomDiv>
         </MiddleLower>
-        <RightLower>
+        <RightLower to={"/catalog/Lifestyle"}>
         <BottomDiv>
             <CategoryTitle>Lifestyle</CategoryTitle>
             {lifestyleCategory && <CategoryImage src={lifestyleCategory.imageSrc}/>}
@@ -120,12 +122,16 @@ text-align: center;
 `
 
 const ItemOriginalPrice = styled.h2`
-transform: translateX(40%) translateY(1000%);
+  position: absolute;
+  top: 25%;
+  left: 77%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
 `
 
 
 const Quote = styled.h1`
-margin: 1.5rem;
+margin: 2rem;
 font-size: 6rem;
 text-align: center;
 `
@@ -149,8 +155,10 @@ width: 33%;
 `
 
 const Star = styled.img`
-margin-left: 2rem;
+margin-left: 3rem;
 height: 20rem;
+position: relative;
+z-index: -10;
 `
 
 const LowerBanner = styled.div`
@@ -158,25 +166,37 @@ display:flex;
 justify-content: space-evenly;
 `
 
-const LeftLower = styled.div`
+const LeftLower = styled(Link)`
 text-align: center;
 margin-top: 2rem;
 width: 25%;
+height: 25rem;
 border: 0.25rem solid black;
+border-radius: 1rem;
+text-decoration: none;
+color:black;
 `
 
-const RightLower = styled.div`
+const RightLower = styled(Link)`
 text-align: center;
 margin-top: 2rem;
 width: 25%;
+height: 25rem;
 border: 0.25rem solid black;
+border-radius: 1rem;
+text-decoration: none;
+color:black;
 `
 
-const MiddleLower = styled.div`
+const MiddleLower = styled(Link)`
 text-align: center;
 margin-top: 2rem;
 width: 25%;
+height: 25rem;
 border: 0.25rem solid black;
+border-radius: 1rem;
+text-decoration: none;
+color:black;
 `
 
 const BottomDiv = styled.div`
@@ -186,14 +206,14 @@ height: 20rem;
 
 const CategoryTitle = styled.h3`
 margin: 1rem;
-font-size: 2rem;
+font-size: 2.5rem;
 `
 
 const CategoryImage = styled.img`
 height: 15rem;
+margin-top: 4rem;
 `
 
 export default HomePage;
 
 
-// Image by Clker-Free-Vector-Images from Pixabay
