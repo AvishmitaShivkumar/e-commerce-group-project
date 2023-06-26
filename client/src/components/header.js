@@ -3,11 +3,22 @@ import { AiOutlineShoppingCart} from "react-icons/ai";
 import { Link, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SearchBar from "./searchbar";
+import { useContext } from "react";
+import { UserContext } from "./UserContext"
 
 const Header = () => {
-  const [ categories, setCategories ] = useState("");
+  
+  const {currentUser, setCurrentUser} = useContext(UserContext);
+
+  const user = localStorage.getItem("user")
+  const userId = JSON.parse(user);
+
+  const [categories, setCategories ] = useState("");
+  const [loggedInUser, setLoggedInUser] = useState("")
 
   // fetches the categories and stores it in state
+
+
   useEffect(() => {
     fetch("/api/allcategories")
     .then(response => response.json())
@@ -15,6 +26,21 @@ const Header = () => {
       setCategories(parsed.data)
     })
   }, []);
+
+  useEffect(()=>(
+    fetch(`/api/user/${userId}`)
+    .then((response) => response.json())
+    .then((parsed) => {
+      if(parsed.status === 200){
+        setLoggedInUser(parsed.data.name)
+        setCurrentUser(parsed.data.name)
+        localStorage.setItem("user", JSON.stringify(parsed.data._id))
+      }
+      })
+    .catch((error) => {
+        console.log(error)
+    })
+    ),[]);
 
   return (
     <>
@@ -25,7 +51,7 @@ const Header = () => {
       <TitleNavlink to="/">Wearables </TitleNavlink>
       <SearchCart>
         <SearchBar/>
-        <StyledNavlink to="/signin">Sign in</StyledNavlink>
+        <StyledNavlink to="/signin">{currentUser ? `Hello ${loggedInUser}` : "Sign In"}</StyledNavlink>
         <Link to="/cart" style={{color:"white",fontSize: "25px" }}><AiOutlineShoppingCart /></Link>
       </SearchCart>
         </Container>
@@ -48,6 +74,7 @@ const Wrapper = styled.div`
 position: sticky;
 top: 0;
 width: 100vw;
+z-index:11;
 `
 
 const StyledNavlink = styled(NavLink)`

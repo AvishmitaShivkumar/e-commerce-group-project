@@ -1,10 +1,12 @@
 import { styled } from "styled-components"
 import { Link, useNavigate } from "react-router-dom"
 import { useState, useEffect, useContext } from "react";
+import { UserContext } from "./UserContext";
 
 
 const SignIn = () => {
 
+  const {currentUser} = useContext(UserContext);
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("")
@@ -45,10 +47,12 @@ fetch(`/api/user/${_id}`)
   .catch((error) => {
       window.alert(error)
   })
-
-
 })
 
+
+useEffect(()=>{
+  if(currentUser) return navigate("/")
+},[currentUser])
 
 // fetch (post) to push user info into database
 

@@ -11,7 +11,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const {currentUser, setCurrentUser} = useContext(UserContext)
+  const {currentUser} = useContext(UserContext)
 
   const navigate = useNavigate();
 
@@ -42,6 +42,12 @@ const handleSubmit = (event) => {
           window.alert(error)
       })
 }
+
+
+useEffect(()=>{
+  if(currentUser) return navigate("/")
+},[currentUser])
+
 
     return (
         <>
