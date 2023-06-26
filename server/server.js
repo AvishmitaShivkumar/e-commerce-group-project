@@ -14,6 +14,8 @@ const { addUser } = require("./handlers/addUser");
 const deleteCartItem = require("./handlers/deletesingleitem");
 const cartCollection = require("./handlers/addcartcollection");
 const updateCart = require("./handlers/cartquantitychange");
+const { getOrder } = require("./handlers/getOrder");
+const checkOut = require("./handlers/checkout");
 
 const PORT = 4000;
 
@@ -54,12 +56,14 @@ express()
 
   .post("/api/signup", addUser)
 
-  .delete('/api/delete/cart/:userId/items/:itemId', deleteCartItem)
-  
+  .delete("/api/delete/cart/:userId/items/:itemId", deleteCartItem)
+
   .post("/api/cartcollection", cartCollection)
 
   .post("/api/updatecart/:userId/:itemId/:quantitychange", updateCart)
 
+  .post("/api/orders", checkOut)
 
+  .get("/api/orders/:orderId", getOrder)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));

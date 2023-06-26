@@ -48,7 +48,7 @@ const Checkout = () => {
       order: formData,
     };
 
-    fetch("/orders", {
+    fetch("/api/orders", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -87,7 +87,7 @@ const Checkout = () => {
           </ItemGroup>
         </ItemDiv>
         <Form>
-          <CoustomerInfo>Constomer information</CoustomerInfo>
+          <CoustomerInfo>Shipping information</CoustomerInfo>
           <InputContainer>
             <Label htmlFor="fname">First Name:</Label>
             <Input
@@ -161,7 +161,7 @@ const Checkout = () => {
         </Form>
 
         <Form>
-          <PaymentInfo>Payment method</PaymentInfo>{" "}
+          <PaymentInfo>Payment</PaymentInfo>{" "}
           <InputContainer>
             <Label htmlFor="creditNum">Card number:</Label>
             <Input
@@ -171,6 +171,8 @@ const Checkout = () => {
               id="creditNum"
               name="creditNum"
               placeholder="0000-0000-0000-0000"
+              minlength="19"
+              maxlength="19"
               required
             />
           </InputContainer>
@@ -194,6 +196,8 @@ const Checkout = () => {
               id="expDate"
               name="expDate"
               placeholder="MM/YY"
+              minlength="5"
+              maxlength="5"
               required
             />
           </InputContainer>
@@ -205,6 +209,8 @@ const Checkout = () => {
               type="text"
               id="code"
               name="code"
+              minlength="3"
+              maxlength="4"
               required
             />
           </InputContainer>
@@ -215,8 +221,8 @@ const Checkout = () => {
         <OrderSummery>Order Summary</OrderSummery>
         <SummaryDiv>
           <Summary>Items: ITEM_PRICE</Summary>
-          <Summary>Shipping: SHIPPING_FEE</Summary>
-          <Summary>Tax: </Summary>
+          <Summary>Shipping: $10</Summary>
+          <Summary>Tax: 5%</Summary>
         </SummaryDiv>
         <OrderTotal>Order Total: </OrderTotal>
         <OrderButton type="submit">Order now</OrderButton>
