@@ -16,7 +16,7 @@ const ProductPage = () => {
     .then(parsed => {
       setOneItem(parsed.data)
     })
-  }, []);
+  }, [product]);
 
     useEffect(() => {
     if(oneItem) { 
