@@ -21,22 +21,22 @@ const Header = () => {
       {!categories ? <h1>Loading</h1> :
         <>
     <Container>
-      <NavLink to="/">Logo</NavLink>
-      <NavLink to="/">Site name</NavLink>
+      <StyledNavlink to="/">Logo</StyledNavlink>
+      <TitleNavlink to="/">Wearables </TitleNavlink>
       <SearchCart>
-        <NavLink to="/signin">Sign in</NavLink>
         <SearchBar/>
-        <Link to="/cart"><AiOutlineShoppingCart style={{fontSize: "25px" }}/></Link>
+        <StyledNavlink to="/signin">Sign in</StyledNavlink>
+        <Link to="/cart" style={{color:"white",fontSize: "25px" }}><AiOutlineShoppingCart /></Link>
       </SearchCart>
         </Container>
-          <div>
+          <CategoryContainer>
          {/* maps through categories and returns a NavLink for each one */}
             {categories.map((category) => {
               return(
                 <Category key={category} to={`/catalog/${category}`}>{category}</Category>
               )
             })}
-          </div>
+          </CategoryContainer>
         </>
     }
     </>
@@ -44,20 +44,53 @@ const Header = () => {
 
 }
 
+const StyledNavlink = styled(NavLink)`
+color: white;
+padding-right: 1rem;
+
+&.active{
+font-weight: bold;
+}
+
+&:hover{
+opacity: .5;
+}
+
+`
+const TitleNavlink = styled(StyledNavlink)`
+font-size: xx-large;
+font-weight: 600;
+text-align: right;
+margin-left: 8rem;
+`
+
+const CategoryContainer = styled.div`
+padding: 1rem 0;
+display: flex;
+justify-content: center;
+`
+
 const Container = styled.div`
 display: flex;
 justify-content: space-between ;
 align-items: center;
-border: 0.1rem solid black;
-padding: 0.3rem;
+padding: 1rem 2rem;
+background-color: var(--color-ocean);
 `
 const Category = styled(NavLink)`
 text-decoration: none;
-margin: 2rem;
+margin: 0 2rem;
+color: var(--color-navy);
 
 &.active{
-
+font-weight: bold;
+color: var(--color-marigold);
 }
+
+&:hover{
+opacity: .5;
+}
+
 `
 const SearchCart = styled.div`
 display: flex;

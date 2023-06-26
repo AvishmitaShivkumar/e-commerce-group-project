@@ -4,6 +4,7 @@ import { useContext, useEffect, useState} from "react";
 import Loader from "./Loader";
 import StarImage from "./Images/Star.png"
 import { Link } from "react-router-dom";
+import { AiOutlineStar } from "react-icons/ai";
 
 
 const HomePage = () => {
@@ -58,40 +59,41 @@ console.log(medicalCategory)
     <>
     {!randomItem 
     ?<Loader/>
-    :<Container>
-      <UpperBanner>
+        : <Container>
+          <UpperBanner to={`/products/${randomItem._id}`}>
+            <Top>
         <Left>
-          <Quote>Our Featured Item!</Quote>
-        </Left>
-        <Middle>
           <ItemTitle>{randomItem.name}</ItemTitle>
           <Image src={randomItem.imageSrc}/>
-        </Middle>
+        </Left>
         <Right>
           <ItemOriginalPrice>{randomItem.price}</ItemOriginalPrice>
-          <Star src={StarImage}/>
-          {/* // Image by Clker-Free-Vector-Images from Pixabay */}
-        </Right>
+          <Star />
+              </Right>
+              </Top>
+        <Bottom>
+          <Quote>Our Featured Item!</Quote>
+        </Bottom>
       </UpperBanner>
       <LowerBanner>
-        <LeftLower to={"/catalog/Fitness"}>
+        <LowerCategory to={"/catalog/Fitness"}>
           <BottomDiv>
             <CategoryTitle>Fitness</CategoryTitle>
             {fitnessCategory && <CategoryImage src={fitnessCategory.imageSrc}/>}
           </BottomDiv>
-        </LeftLower>
-        <MiddleLower to={"/catalog/Medical"}>
+        </LowerCategory>
+        <LowerCategory to={"/catalog/Medical"}>
           <BottomDiv>
             <CategoryTitle>Medical</CategoryTitle>
             {medicalCategory && <CategoryImage src={medicalCategory.imageSrc}/>}
           </BottomDiv>
-        </MiddleLower>
-        <RightLower to={"/catalog/Lifestyle"}>
+        </LowerCategory>
+        <LowerCategory to={"/catalog/Lifestyle"}>
         <BottomDiv>
             <CategoryTitle>Lifestyle</CategoryTitle>
             {lifestyleCategory && <CategoryImage src={lifestyleCategory.imageSrc}/>}
           </BottomDiv>
-        </RightLower>
+        </LowerCategory>
       </LowerBanner>
     </Container>
     }
@@ -103,11 +105,19 @@ const Container = styled.div`
 height:100vh;
 `
 
-const UpperBanner = styled.div`
+const UpperBanner = styled(Link)`
+text-decoration: none;
+flex-direction: column;
+color: black;
 margin-top: 1rem;
 display: flex;
-justify-content: space-evenly;
-border: 0.25rem solid black;
+background-color:hsla(184 , 100% , 28%, .1);
+`
+
+const Top = styled.div`
+display: flex;
+justify-content: center;
+align-content: center;
 `
 
 const Image = styled.img`
@@ -122,43 +132,50 @@ text-align: center;
 `
 
 const ItemOriginalPrice = styled.h2`
-  position: absolute;
-  top: 25%;
-  left: 77%;
-  transform: translate(-50%, -50%);
+position: absolute;
   z-index: 10;
+  align-self: center;
+  justify-self: center;
+  font-size: 1.5rem;
+  font-weight:bold;
 `
 
 
 const Quote = styled.h1`
 margin: 2rem;
-font-size: 6rem;
+font-size: 5rem;
 text-align: center;
 `
 
-const Left = styled.div`
-width: 33%;
+const Bottom = styled.div`
+width: 100%;
 display: flex;
 flex-direction: column;
 `
 
-const Middle = styled.div`
-width: 33%;
+const Left = styled.div`
+width: 50%;
 display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+background-color: white;
+margin: 2rem;
+border-radius: 5%;
 `
 
 const Right = styled.div`
-width: 33%;
+width: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
 `
 
-const Star = styled.img`
-margin-left: 3rem;
-height: 20rem;
+const Star = styled(AiOutlineStar)`
+font-size: 25rem;
 position: relative;
-z-index: -10;
+z-index: 1;
+color: var(--color-marigold) ;
 `
 
 const LowerBanner = styled.div`
@@ -166,38 +183,38 @@ display:flex;
 justify-content: space-evenly;
 `
 
-const LeftLower = styled(Link)`
+const LowerCategory = styled(Link)`
 text-align: center;
 margin-top: 2rem;
 width: 25%;
 height: 25rem;
-border: 0.25rem solid black;
+border: 0.10rem solid var(--color-marigold);
 border-radius: 1rem;
 text-decoration: none;
-color:black;
+color:var(--color-ocean);
 `
 
-const RightLower = styled(Link)`
-text-align: center;
-margin-top: 2rem;
-width: 25%;
-height: 25rem;
-border: 0.25rem solid black;
-border-radius: 1rem;
-text-decoration: none;
-color:black;
-`
+// const RightLower = styled(Link)`
+// text-align: center;
+// margin-top: 2rem;
+// width: 25%;
+// height: 25rem;
+// border: 0.25rem solid var(--color-blush);
+// border-radius: 1rem;
+// text-decoration: none;
+// color:black;
+// `
 
-const MiddleLower = styled(Link)`
-text-align: center;
-margin-top: 2rem;
-width: 25%;
-height: 25rem;
-border: 0.25rem solid black;
-border-radius: 1rem;
-text-decoration: none;
-color:black;
-`
+// const MiddleLower = styled(Link)`
+// text-align: center;
+// margin-top: 2rem;
+// width: 25%;
+// height: 25rem;
+// border: 0.25rem solid var(--color-ocean);
+// border-radius: 1rem;
+// text-decoration: none;
+// color:black;
+// `
 
 const BottomDiv = styled.div`
 height: 20rem;

@@ -1,6 +1,16 @@
 import { createGlobalStyle } from "styled-components"
+import { Link } from "react-router-dom";
+
 
 export default createGlobalStyle`
+
+:root {
+    --color-blush: #edbbc4;
+    --color-ocean: #00838d;
+	--color-marigold: #f28800;
+    --color-navy: #004363;
+  }
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -23,7 +33,7 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
+	font-family: 'Raleway';
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -49,4 +59,26 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+
+* {
+	text-decoration: none;
+  }
+
+  p {
+    font-size: 1em;
+    margin: 20px;
+    margin-bottom: 5px;
+    }
+
+    h1 {
+        margin-bottom: 5px;
+		font-weight: 500;
+    }
+
+	h2, h3, h4, h5 {
+		font-weight: 400;
+	}
+
+
 `
