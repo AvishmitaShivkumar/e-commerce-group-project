@@ -174,22 +174,46 @@ const SearchBar = () => {
 
 export default SearchBar;
 
-const Search = styled.div`
-  display: flex;
-  align-items: center;
-  border: 0.1rem solid black;
-  margin-right: 1rem;
-`;
+
 
 const InputBox = styled.input`
-  height: 1.5rem;
+  min-height: 1.5rem;
   border: none;
+  &:focus{
+outline: .2rem solid var(--color-navy) ;
+outline-offset: -.1rem;
+
+}
 `;
 
 const SearchIcon = styled.button`
+  min-height: 1.5rem;
   background-color: white;
   border: none;
+  color: var(--color-navy);
+/* &:focus {
+    outline: 0.2rem solid var(--color-navy);
+  } */
 `;
+
+const Search = styled.div`
+  display: flex;
+  align-items: center;
+  border: 0.15rem solid var(--color-navy);
+  margin-right: 1rem;
+  & ${InputBox}:focus + ${SearchIcon}
+{
+outline: .2rem solid var(--color-navy) ;
+outline-offset: -.1rem;
+
+};
+  &:hover {
+    border-color: var(--color-navy);
+  }
+  z-index: 10000;
+
+`;
+
 
 const Suggestions = styled.div`
   width: 400px;
@@ -219,7 +243,7 @@ const Suggestion = styled.li`
   width: 100%;
   border-radius: 5px;
   &.selected {
-    background-color: hsla(50deg, 100%, 80%, 0.25);
+    background-color:hsla(34,100%, 47%,.10);
   }
 `;
 const Prediction = styled.span`
@@ -231,5 +255,5 @@ const Italic = styled.span`
   font-style: italic;
 `;
 const Purple = styled(Italic)`
-  color: purple;
+  color: var(--color-ocean);
 `;
