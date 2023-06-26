@@ -11,10 +11,9 @@ const options = {
 };
 
 const cartCollection = async (request, response) => {
-    //if needed
+
     const { userId, items } = request.body;
-    //if needed
-    // const { somethingElse } = request.params;
+
 
     const client = new MongoClient(MONGO_URI, options);
 
@@ -23,8 +22,6 @@ const cartCollection = async (request, response) => {
         const db = client.db("ecommerce");
 
         const user = await db.collection("users").findOne({ _id: userId._id });
-
-        const updateStock = await db.collection("items").updateOne({ _id: items._id },{ $inc: { numInStock: -1 } });
 
         const stock = await db.collection("items").findOne({ _id: items._id });
 
@@ -43,7 +40,7 @@ const cartCollection = async (request, response) => {
 
 
     } catch (err) {
-        (err) => console.log(err);
+        console.log(err);
     } finally {
         client.close();
     }
