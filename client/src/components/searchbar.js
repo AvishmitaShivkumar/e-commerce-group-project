@@ -166,7 +166,7 @@ const SearchBar = () => {
         </Suggestions>
       )}
       <SearchIcon>
-        <AiOutlineSearch style={{ fontSize: "20px" }} />
+        <AiOutlineSearch style={{ fontSize: "21px" }} />
       </SearchIcon>
     </Search>
   );
