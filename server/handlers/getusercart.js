@@ -1,4 +1,3 @@
-
 "use strict";
 const { MongoClient } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
@@ -11,8 +10,8 @@ const options = {
     useUnifiedTopology: true,
 };
 
-const getUser = async (request, response) => {
-    const { userId } = request.params;
+const getUserCart = async (request, response) => {
+    const { userId, itemId } = request.params;
 
     const client = new MongoClient(MONGO_URI, options);
 
@@ -21,10 +20,14 @@ const getUser = async (request, response) => {
         const db = client.db("ecommerce");
         const user = await db.collection("users").findOne({ _id: userId });
 
+        const cartItem = user.cart.find(item => itemId === itemId);
+
+        console.log(cartItem)
+
     if (user) {
-        return response.status(200).json({ status: 200, data: user });
+        return response.status(200).json({ status: 200, data: cartItem });
     } else {
-        return response.status(404).json({ status: 404, message: `No user found with ${userId} id` });
+        return response.status(404).json({ status: 404, message: `No cart item found with ${itemId} id` });
     }
 
     } catch (error) {
@@ -35,5 +38,5 @@ const getUser = async (request, response) => {
     }
 }
 
-module.exports = { getUser }
+module.exports = { getUserCart }
 
