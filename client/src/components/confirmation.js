@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Loader from "./Loader";
 
 const Confirmation = () => {
+
   const { orderId } = useParams();
   const [ordered, setOrdered] = useState(null);
 
@@ -32,6 +33,7 @@ const Confirmation = () => {
       <Contents>{`By: ${ordered.email}`}</Contents>
       <Contents>{`We sent you a confirmation email to: ${ordered.email}`}</Contents>
       <Contents>{`Address: ${ordered.shipping.address}`}</Contents>
+
     </Container>
   );
 };
