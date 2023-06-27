@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const Checkout = ( { setAllData }) => {
+const Checkout = ({ finalTotal }) => {
     const { itemId } = useParams();
     const [ordered, setOrdered] = useState(null);
     const [loading, setLoading] = useState(true)
@@ -73,8 +73,6 @@ const Checkout = ( { setAllData }) => {
             },
         };
 
-        setAllData([formData, cart, ordered])
-
         fetch("/api/orders", {
             method: "POST",
             headers: {
@@ -85,10 +83,12 @@ const Checkout = ( { setAllData }) => {
         })
         .then((res) => res.json())
         .then((parsed) => {
-                navigate(`/confirmation`);
+                navigate(`/confirmation/${parsed.data}`);
         });
         
     };
+
+
 
     if (loading) {
         return (
@@ -96,102 +96,108 @@ const Checkout = ( { setAllData }) => {
         )
     }
 
+    
+
     return (
         <Container>
             <CheckoutHeader>Checkout</CheckoutHeader>
+            
             <DivLeft>
-                <ItemDiv>
-                <YourItems>Your Items</YourItems>
-                {ordered.cart.map((item) => {
+              <ItemDiv>
+              <YourItems>Your Items</YourItems>
+              {ordered.cart.map((item) => {
 
-                    return (
-                        <ItemGroup key={item._id}>
-                            <Img src={item.imageSrc}/>
-                                <div>
-                                    <ItemInfo>{item.name}</ItemInfo>
-                                    <ItemInfo>Price per Item{item.price}</ItemInfo>
-                                    <ItemInfo>Qty: {item.quantity}</ItemInfo>
-                                </div>
-                        </ItemGroup>
-                    );
-                })}
-                </ItemDiv>
-        <Form onSubmit={handleSubmit}>
-            <CoustomerInfo>Shipping information</CoustomerInfo>
-            <InputContainer>
-                <Label htmlFor="fname">First Name:</Label>
-                <Input
-                onChange={handleChange}
-                value={formData.fname}
-                type="text"
-                id="fname"
-                name="fname"
-                required
-                />
-            </InputContainer>
-            <InputContainer>
-                <Label htmlFor="lname">Last Name:</Label>
-                <Input
-                onChange={handleChange}
-                value={formData.lname}
-                type="text"
-                id="lname"
-                name="lname"
-                required
-                />
-            </InputContainer>
-            <InputContainer>
-                <Label htmlFor="address">Address:</Label>
-                <Input
-                
-                value={formData.address}
-                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                type="text"
-                id="address"
-                name="address"
-                placeholder="1234 Main St"
-                required
-                />
-            </InputContainer>
-            <InputContainer>
-                <Label htmlFor="address2">Address 2 (Optional):</Label>
-                <Input
-                value={formData.address2}
-                onChange={(e) => setFormData({ ...formData, address2: e.target.value })}
-                type="text"
-                id="address2"
-                name="address2"
-                placeholder="Apartment or suite"
-                />
-            </InputContainer>
-            <InputContainer>
-                <Label htmlFor="address2">Postal code:</Label>
-                <Input
-                
-                value={formData.postalcode}
-                onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-                type="text"
-                id="postalcode"
-                name="postalcode"
-                placeholder="A0A 0A0"
-                required
-                />
-            </InputContainer>
-      
+                  return (
+                      <ItemGroup key={item._id}>
+                          <Img src={item.imageSrc}/>
+                              <div>
+                                  <ItemInfo>{item.name}</ItemInfo>
+                                  <ItemInfo>Price per Item{item.price}</ItemInfo>
+                                  <ItemInfo>Qty: {item.quantity}</ItemInfo>
+                              </div>
+                      </ItemGroup>
+                  );
+              })}
+              </ItemDiv>
 
-        <OrderSummeryContainer>
-            <OrderSummery>Order Summary</OrderSummery>
-            <SummaryDiv>
-            <Summary>Items: ITEM_PRICE</Summary>
-            <Summary>Shipping: $10</Summary>
-            <Summary>Tax: 5%</Summary>
-            </SummaryDiv>
-            <OrderTotal>Order Total: </OrderTotal>
-            <OrderButton type="submit">Order now</OrderButton>
-        </OrderSummeryContainer>
+              <Form onSubmit={handleSubmit}>
+                  <div>
+                  <CoustomerInfo>Shipping information</CoustomerInfo>
+                  <InputContainer>
+                      <Label htmlFor="fname">First Name:</Label>
+                      <Input
+                      onChange={handleChange}
+                      value={formData.fname}
+                      type="text"
+                      id="fname"
+                      name="fname"
+                      required
+                      />
+                  </InputContainer>
+                  <InputContainer>
+                      <Label htmlFor="lname">Last Name:</Label>
+                      <Input
+                      onChange={handleChange}
+                      value={formData.lname}
+                      type="text"
+                      id="lname"
+                      name="lname"
+                      required
+                      />
+                  </InputContainer>
+                  <InputContainer>
+                      <Label htmlFor="address">Address:</Label>
+                      <Input
+                      
+                      value={formData.address}
+                      onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                      type="text"
+                      id="address"
+                      name="address"
+                      placeholder="1234 Main St"
+                      required
+                      />
+                  </InputContainer>
+                  <InputContainer>
+                      <Label htmlFor="address2">Address 2 (Optional):</Label>
+                      <Input
+                      value={formData.address2}
+                      onChange={(e) => setFormData({ ...formData, address2: e.target.value })}
+                      type="text"
+                      id="address2"
+                      name="address2"
+                      placeholder="Apartment or suite"
+                      />
+                  </InputContainer>
+                  <InputContainer>
+                      <Label htmlFor="address2">Postal code:</Label>
+                      <Input
+                      
+                      value={formData.postalcode}
+                      onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
+                      type="text"
+                      id="postalcode"
+                      name="postalcode"
+                      placeholder="A0A 0A0"
+                      required
+                      />
+                  </InputContainer>
+                  </div>
+                  
 
-        </Form>
-        </DivLeft>
+              <OrderSummeryContainer>
+                  <OrderSummery>Order Summary</OrderSummery>
+                  <SummaryDiv>
+                  <Summary>Items:</Summary>
+                  <Summary>Shipping: $10</Summary>
+                  <Summary>Tax: 5%</Summary>
+                  </SummaryDiv>
+                  <OrderTotal>Order Total: {finalTotal}</OrderTotal>
+                  <OrderButton type="submit">Order now</OrderButton>
+              </OrderSummeryContainer>
+
+            </Form>
+          </DivLeft>
         </Container>
     );
 };
@@ -256,7 +262,8 @@ const CoustomerInfo = styled.p`
 
 const Form = styled.form`
   margin-top: 30px;
-  width: 800px;
+  width: 100vw;
+  display: flex;
 `;
 
 const InputContainer = styled.div`
@@ -283,6 +290,7 @@ const PaymentInfo = styled.p`
 `;
 
 const OrderSummeryContainer = styled.div`
+  margin-left:150px;
   width: 300px;
   /* border: 2px solid #cdf3f1; */
   background-color: #f7d1cd;
