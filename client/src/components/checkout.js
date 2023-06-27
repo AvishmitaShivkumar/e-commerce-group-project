@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const Checkout = () => {
+const Checkout = ( { setAllData }) => {
     const { itemId } = useParams();
     const [ordered, setOrdered] = useState(null);
     const [loading, setLoading] = useState(true)
@@ -38,9 +38,9 @@ const Checkout = () => {
       
       if(cart){
         cart.forEach((item)=>{
-        newArray.push(item._id)
+          newArray.push(item._id)
         })
-        setCartId(newArray.pop())
+        setCartId(newArray)
         
       }
     },[cart])
@@ -60,7 +60,6 @@ const Checkout = () => {
         });
     }, []);
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
         
@@ -73,6 +72,8 @@ const Checkout = () => {
                 postalCode: formData.postalCode,
             },
         };
+
+        setAllData([formData, cart, ordered])
 
         fetch("/api/orders", {
             method: "POST",

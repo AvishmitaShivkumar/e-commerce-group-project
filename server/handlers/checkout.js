@@ -23,34 +23,44 @@ const checkOut = async (request, response) => {
 
         const users = await db.collection("users").findOne({ _id: user });
 
-        console.log(users.email)
+        const newId = uuidv4()
+
+        let alreadyRan = null
+
+        for (let i = 0; i < cart.length; i++) {
+
+            const cartItem = users.cart.find(item => item._id === cart[i]);
+
+            const stock = await db.collection("items").findOne({ _id: cart[i] });
 
 
-        const cartItem = users.cart.find(item => item._id === cart);
+            // const companyPurchase = await db.collection("companies").updateOne({ _id: companies._id}, { $push: { purchases: { item: cartItem, user : { email: users.email, name: users.name}, shipping: shipping } }})
 
-        console.log(cartItem)
+            if (alreadyRan === null) {
+                const newPurchase = await db.collection("purchases").insertOne({ _id: newId, Items: [cartItem], shipping: shipping, email: users.email})
 
-        const stock = await db.collection("items").findOne({ _id: cart });
+            } else {
+                const existingPurchase = await db.collection("purchases").findOne({ _id: newId });
+                const updatedItems = [...existingPurchase.Items, cartItem];
+                const samePurchase = await db.collection("purchases").updateOne({ _id: newId },{ $set: { Items: updatedItems } });
+            }
 
 
-        // const companyPurchase = await db.collection("companies").updateOne({ _id: companies._id}, { $push: { purchases: { item: cartItem, user : { email: users.email, name: users.name}, shipping: shipping } }})
+            const someCalc = cartItem.quantity - stock.numInStock
 
-        const newPurchase = await db.collection("purchases").insertOne({ Items: cartItem, shipping: shipping, email: users.email})
+            alreadyRan = true
 
+            if (cartItem.quantity <= stock.numInStock) {
 
-        const someCalc = cartItem.quantity - stock.numInStock
+                const updateStock = await db.collection("items").updateOne({ _id: cart }, { $inc: { numInStock: -cartItem.quantity } });
+                const deleteCart = await db.collection("users").updateOne({ _id: user },{ $set: { cart: [] } });
+            } else if (cartItem.quantity >= stock.numInStock) {
+                response.status(400).json({ status: 400, message:`Sorry we do not have that many in stock, you have ${someCalc} to many` });
 
-        console.log(cartItem.quantity)
-
-        if (cartItem.quantity <= stock.numInStock) {
-
-            const updateStock = await db.collection("items").updateOne({ _id: cart }, { $inc: { numInStock: -cartItem.quantity } });
-            const deleteCart = await db.collection("users").updateOne({ _id: user },{ $set: { cart: [] } });
-            response.status(200).json({ status: 200 });
-        } else if (cartItem.quantity >= stock.numInStock) {
-            response.status(400).json({ status: 400, message:`Sorry we do not have that many in stock, you have ${someCalc} to many` });
-
+            }
+            
         }
+        response.status(200).json({ status: 200 });
 
     } catch (err) {
         console.log(err);
