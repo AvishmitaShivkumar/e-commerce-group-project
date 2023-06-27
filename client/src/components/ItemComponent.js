@@ -1,16 +1,19 @@
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 import { UserContext } from "./UserContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 
 const ItemComponent = ({oneItem, company}) => {
+
+  const [loading, setLoading] = useState(false)
 
   const user = localStorage.getItem("user")
   const userId = JSON.parse(user);
 
 
   const addToCartClick = (event) => {
+    setLoading(true)
     event.preventDefault();
     fetch("/api/cartcollection", {
       method: "POST",
@@ -30,6 +33,7 @@ const ItemComponent = ({oneItem, company}) => {
       .then((parsed) => {
           if(parsed.status === 200){
             window.alert("This item has been added to your cart!")
+            setLoading(false)
           }
       })
       .catch((error) => {
@@ -50,7 +54,7 @@ const ItemComponent = ({oneItem, company}) => {
         <p>Category: {oneItem.category}</p>
                 <Link to={`/company/${oneItem.companyId}`} style={{color: "var(--color-ocean)", cursor: "pointer"}}><p>Made by: {company.name}</p></Link>
         <Button disabled={oneItem.numInStock === 0} onClick={addToCartClick}>
-        {oneItem.numInStock > 0 ? "Add to cart" : "Out of stock"}
+        {!oneItem.numInStock > 0 ? "Out of stock" : loading ? "Adding to cart..."  : "Add to cart"}
         </Button>
       </InformationContainer>
     </ItemContainer>

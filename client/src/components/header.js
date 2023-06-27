@@ -8,7 +8,7 @@ import { UserContext } from "./UserContext"
 
 const Header = () => {
   
-  const {currentUser, loggedInUser} = useContext(UserContext);
+  const {currentUser, setCurrentUser, loggedInUser} = useContext(UserContext);
 
   const [categories, setCategories ] = useState("");
 
@@ -23,6 +23,11 @@ const Header = () => {
   }, []);
 
 
+  const signOut = (event) => {
+    event.preventDefault();
+    localStorage.removeItem("user");
+    setCurrentUser(null);
+  }
 
   return (
     <>
@@ -34,6 +39,7 @@ const Header = () => {
       <SearchCart>
         <SearchBar/>
         <StyledNavlink to="/signin">{currentUser ? `Hello ${loggedInUser}` : "Sign In"}</StyledNavlink>
+        <StyledNavlink to="/" onClick={signOut}>{currentUser && "Sign Out"}</StyledNavlink>
         <Link to="/cart" style={{color:"var(--color-secondary)",fontSize: "25px" }}><AiOutlineShoppingCart /></Link>
       </SearchCart>
         </Container>
