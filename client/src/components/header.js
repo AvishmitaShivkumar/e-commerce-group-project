@@ -52,7 +52,7 @@ const Header = () => {
       <SearchCart>
         <SearchBar/>
         <StyledNavlink to="/signin">{currentUser ? `Hello ${loggedInUser}` : "Sign In"}</StyledNavlink>
-        <Link to="/cart" style={{color:"white",fontSize: "25px" }}><AiOutlineShoppingCart /></Link>
+        <Link to="/cart" style={{color:"var(--color-secondary)",fontSize: "25px" }}><AiOutlineShoppingCart /></Link>
       </SearchCart>
         </Container>
           <CategoryContainer>
@@ -78,7 +78,7 @@ z-index:11;
 `
 
 const StyledNavlink = styled(NavLink)`
-color: white;
+color: var(--color-secondary);
 padding-right: 1rem;
 
 &.active{
@@ -95,13 +95,14 @@ font-size: xx-large;
 font-weight: 600;
 text-align: right;
 margin-left: 8rem;
+color: var(--color-accent);
 `
 
 const CategoryContainer = styled.div`
 padding: 1rem 0;
 display: flex;
 justify-content: center;
-background-color: white;
+background-color: var(--color-secondary);
 `
 
 const Container = styled.div`
@@ -109,16 +110,16 @@ display: flex;
 justify-content: space-between ;
 align-items: center;
 padding: 1rem 2rem;
-background-color: var(--color-ocean);
+background-color: var(--color-primary);
 `
 const Category = styled(NavLink)`
 text-decoration: none;
 margin: 0 2rem;
-color: var(--color-navy);
+color: var(--color-primary);
 
 &.active{
 font-weight: bold;
-color: var(--color-marigold);
+color: var(--color-accent);
 font-size: 1.5rem;
 }
 &:hover{

@@ -180,7 +180,7 @@ const InputBox = styled.input`
   min-height: 1.5rem;
   border: none;
   &:focus{
-outline: .2rem solid var(--color-navy) ;
+outline: .2rem solid var(--color-primary) ;
 outline-offset: -.1rem;
 
 }
@@ -190,22 +190,25 @@ const SearchIcon = styled.button`
   min-height: 1.5rem;
   background-color: white;
   border: none;
-  color: var(--color-navy);
+  color: var(--color-primary);
+/* &:focus {
+    outline: 0.2rem solid var(--color-primary);
+  } */
 `;
 
 const Search = styled.div`
   display: flex;
   align-items: center;
-  border: 0.15rem solid var(--color-navy);
+  border: 0.15rem solid var(--color-primary);
   margin-right: 1rem;
   & ${InputBox}:focus + ${SearchIcon}
 {
-outline: .2rem solid var(--color-navy) ;
+outline: .2rem solid var(--color-primary) ;
 outline-offset: -.1rem;
 
 };
   &:hover {
-    border-color: var(--color-navy);
+    border-color: var(--color-primary);
   }
   z-index: 10000;
 
@@ -230,7 +233,6 @@ const Suggestions = styled.div`
 
 const Subtitle = styled.li`
   font-weight: bold;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-size: larger;
   text-align: center;
 `;
@@ -238,9 +240,8 @@ const Subtitle = styled.li`
 const Suggestion = styled.li`
   padding: 15px 10px;
   width: 100%;
-  border-radius: 5px;
   &.selected {
-    background-color:hsla(34,100%, 47%,.10);
+    background-color:hsla(30, 52%, 87%, 0.5);
   }
 `;
 const Prediction = styled.span`
@@ -252,5 +253,5 @@ const Italic = styled.span`
   font-style: italic;
 `;
 const Purple = styled(Italic)`
-  color: var(--color-ocean);
+  color: var(--color-accent);
 `;
