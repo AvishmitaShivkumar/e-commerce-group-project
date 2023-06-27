@@ -33,7 +33,6 @@ const handleSubmit = (event) => {
       .then((response) => response.json())
       .then((parsed) => {
         if(parsed.status===200){
-          console.log(parsed)
           localStorage.setItem("user", JSON.stringify(parsed.userId))
           navigate("/signupconfirmation")
         }

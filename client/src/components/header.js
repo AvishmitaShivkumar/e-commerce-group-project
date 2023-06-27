@@ -8,16 +8,11 @@ import { UserContext } from "./UserContext"
 
 const Header = () => {
   
-  const {currentUser, setCurrentUser} = useContext(UserContext);
-
-  const user = localStorage.getItem("user")
-  const userId = JSON.parse(user);
+  const {currentUser, loggedInUser} = useContext(UserContext);
 
   const [categories, setCategories ] = useState("");
-  const [loggedInUser, setLoggedInUser] = useState("")
 
   // fetches the categories and stores it in state
-
 
   useEffect(() => {
     fetch("/api/allcategories")
@@ -27,20 +22,7 @@ const Header = () => {
     })
   }, []);
 
-  useEffect(()=>(
-    fetch(`/api/user/${userId}`)
-    .then((response) => response.json())
-    .then((parsed) => {
-      if(parsed.status === 200){
-        setLoggedInUser(parsed.data.name)
-        setCurrentUser(parsed.data.name)
-        localStorage.setItem("user", JSON.stringify(parsed.data._id))
-      }
-      })
-    .catch((error) => {
-        console.log(error)
-    })
-    ),[]);
+
 
   return (
     <>

@@ -6,7 +6,7 @@ import { UserContext } from "./UserContext";
 
 const SignIn = () => {
 
-  const {currentUser} = useContext(UserContext);
+  const {currentUser, setCurrentUser} = useContext(UserContext);
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("")
@@ -19,7 +19,6 @@ const SignIn = () => {
     fetch("/api/users")
     .then((response)=>response.json())
     .then((parsed)=>{
-      console.log(parsed.data)
       setData(parsed.data)
     })
   },[])
@@ -40,7 +39,7 @@ fetch(`/api/user/${_id}`)
   .then((parsed) => {
     if(parsed.status === 200){
       localStorage.setItem("user", JSON.stringify(parsed.data._id))
-      console.log(parsed.data)
+      setCurrentUser(parsed.data._id)
       navigate("/")
     }
     })
