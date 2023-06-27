@@ -3,7 +3,7 @@ import { InventoryContext } from "./InventoryContext";
 import { useContext, useEffect, useState} from "react";
 import Loader from "./Loader";
 import { Link } from "react-router-dom";
-import { AiOutlineStar } from "react-icons/ai";
+import { AiFillStar } from "react-icons/ai";
 
 
 const HomePage = () => {
@@ -107,11 +107,13 @@ height:100vh;
 const UpperBanner = styled(Link)`
 text-decoration: none;
 flex-direction: column;
-color: black;
 margin-top: 1rem;
 display: flex;
-background-color:hsla(184 , 100% , 28%, .1);
-`
+background-image: url("../homepage_banner.jpg");
+background-size: cover;
+background-repeat: no-repeat;
+background-position: center;
+` 
 
 const Top = styled.div`
 display: flex;
@@ -144,6 +146,7 @@ const Quote = styled.h1`
 margin: 2rem;
 font-size: 5rem;
 text-align: center;
+color: var(--color-secondary)
 `
 
 const Bottom = styled.div`
@@ -170,11 +173,11 @@ justify-content: center;
 align-items: center;
 `
 
-const Star = styled(AiOutlineStar)`
+const Star = styled(AiFillStar)`
 font-size: 25rem;
 position: relative;
 z-index: 1;
-color: var(--color-marigold) ;
+color: var(--color-secondary) ;
 `
 
 const LowerBanner = styled.div`

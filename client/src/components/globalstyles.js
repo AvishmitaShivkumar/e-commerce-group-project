@@ -5,6 +5,10 @@ import { Link } from "react-router-dom";
 export default createGlobalStyle`
 
 :root {
+	--color-primary: #0A0A33;
+	--color-secondary: #EFDECD;
+	--color-accent: #D93C1C;
+	
     --color-blush: #edbbc4;
     --color-ocean: #00838d;
 	--color-marigold: #f28800;
@@ -69,16 +73,18 @@ table {
     font-size: 1em;
     margin: 20px;
     margin-bottom: 5px;
+	color: var(--color-primary);
     }
 
     h1 {
         margin-bottom: 5px;
 		font-weight: 500;
+		color: var(--color-primary);
     }
 
 	h2, h3, h4, h5 {
 		font-weight: 400;
+		color: var(--color-primary);
 	}
-
 
 `
