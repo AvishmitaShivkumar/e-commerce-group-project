@@ -7,6 +7,7 @@ const Confirmation = () => {
 
   const { orderId } = useParams();
   const [ordered, setOrdered] = useState(null);
+  console.log("🚀 ~ file: confirmation.js:10 ~ Confirmation ~ ordered:", ordered)
 
   useEffect(() => {
     fetch(`/api/orders/${orderId}`)
@@ -28,12 +29,15 @@ const Confirmation = () => {
       <ConfirmationHeader>Confirmation</ConfirmationHeader>
       <Contents>Thanks for your order!!</Contents>
       <Contents>{`Order #: ${ordered._id}`}</Contents>
-      <Contents>{`Item : ${ordered.Items.name}`}</Contents>
-      <Contents>{`Price: ${ordered.Items.price}`}</Contents>
+      {ordered.Items.map((item) => (
+        <div key={item._id}>
+          <Contents>{`Item: ${item.name}`}</Contents>
+          <Contents>{`Price: ${item.price}`}</Contents>
+        </div>
+      ))}
       <Contents>{`By: ${ordered.email}`}</Contents>
       <Contents>{`We sent you a confirmation email to: ${ordered.email}`}</Contents>
       <Contents>{`Address: ${ordered.shipping.address}`}</Contents>
-
     </Container>
   );
 };
