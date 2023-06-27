@@ -66,24 +66,22 @@ table {
 
 * {
 	text-decoration: none;
+	color: var(--color-primary);
   }
 
   p {
     font-size: 1em;
     margin: 20px;
     margin-bottom: 5px;
-	color: var(--color-primary);
     }
 
     h1 {
         margin-bottom: 5px;
 		font-weight: 500;
-		color: var(--color-primary);
     }
 
 	h2, h3, h4, h5 {
 		font-weight: 400;
-		color: var(--color-primary);
 	}
 
 `;

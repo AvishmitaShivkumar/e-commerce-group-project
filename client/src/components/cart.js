@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
+import Loader from "./Loader"
 
 const Cart = () => {
 
@@ -38,7 +39,9 @@ const Cart = () => {
   return (
     <>
     {!loading ? 
-    <p>loading...</p> :
+    <p>
+      <Loader/>
+      </p> :
     <Container>
       <CartTitle>Cart</CartTitle>
       <CartDiv>
