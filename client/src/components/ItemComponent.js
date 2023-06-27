@@ -1,26 +1,28 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
-const ItemComponent = ({oneItem, company}) => {
-
-    return (
-        <ItemContainer>
-            <BigImage src={oneItem.imageSrc} />
-            <NameContainer>
-        {oneItem.name}
-            </NameContainer>
-            <InformationContainer>
-                <BoldParagraph>{oneItem.price}</BoldParagraph>
+const ItemComponent = ({ oneItem, company }) => {
+  return (
+    <ItemContainer>
+      <BigImage src={oneItem.imageSrc} />
+      <NameContainer>{oneItem.name}</NameContainer>
+      <InformationContainer>
+        <BoldParagraph>{oneItem.price}</BoldParagraph>
         <ItalicParagraph>{oneItem.numInStock} in stock</ItalicParagraph>
         <p>Body location: {oneItem.body_location}</p>
         <p>Category: {oneItem.category}</p>
-                <Link to={`/company/${oneItem.companyId}`} style={{color: "var(--color-ocean)", cursor: "pointer"}}><p>Made by: {company.name}</p></Link>
+        <Link
+          to={`/company/${oneItem.companyId}`}
+          style={{ color: "var(--color-ocean)", cursor: "pointer" }}
+        >
+          <p>Made by: {company.name}</p>
+        </Link>
         <Button disabled={oneItem.numInStock === 0}>
-        {oneItem.numInStock > 0 ? "Add to cart" : "Out of stock"}
+          {oneItem.numInStock > 0 ? "Add to cart" : "Out of stock"}
         </Button>
-        </InformationContainer>
-        </ItemContainer>
-    )
+      </InformationContainer>
+    </ItemContainer>
+  );
 };
 
 export default ItemComponent;
@@ -30,14 +32,14 @@ const ItemContainer = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr;
   align-items: center;
-  max-width: 50vw;
-    margin-top: 5rem;
-padding: 2em;
-box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;`;
-
+  max-width: 90%;
+  margin-top: 5rem;
+  padding: 2em;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+  `;
 
 const BigImage = styled.img`
-  width: 25vw;
+  width: 80%;
   overflow: hidden;
   grid-area: 1 / 1 / span 2;
   top: 0;
@@ -45,33 +47,36 @@ const BigImage = styled.img`
 `;
 
 const ItalicParagraph = styled.p`
-font-style: italic;
-`
+  font-style: italic;
+`;
+
 const NameContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-self: center;
   text-align: left;
-    font-size:2rem;
-    font-weight: 700;
+  font-size: 2rem;
+  font-weight: 700;
 `;
 
 const InformationContainer = styled.div`
   display: grid;
   text-align: left;
   justify-self: flex-start;
-  width: 25vw;
+  width: 100%;
+  max-width: 100%;
 `;
 
 const BoldParagraph = styled.p`
-font-weight: 600;
-font-size: larger;
-`
+  font-weight: 600;
+  font-size: larger;
+`;
+
 const Button = styled.button`
   background-color: var(--color-navy);
   padding: 20px 40px;
   margin-top: 1em;
-  width: 10em;
+  width: 70%;
   border-radius: 10px;
   color: white;
   font-size: x-large;
@@ -88,5 +93,3 @@ const Button = styled.button`
     cursor: not-allowed;
   }
 `;
-
-export {BoldParagraph}

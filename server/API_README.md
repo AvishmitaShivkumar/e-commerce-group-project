@@ -16,7 +16,10 @@
 | `/api/signup`       | `POST`    | Adds a new user to users collection   | addUser |
 | `api/delete/cart/:userId/items/:itemId` | `DELETE` | Deletes an item from the cart | deleteCartItem |
 | `/api/cartcollection` | `POST` | Adds item to cart or +1 if it already exists | cartCollection|
-| `*` | `*` |                   |  |
+| `/api/orders/:orderId` | `GET` |  Gets the order based on the orderId | getOrder |
+| `/api/orders` | `POST` |    |checkOut |
+| `/api/checkout` | `POST` |                   |checkOut |
+| `/api/updatecart/:userId/:itemId/:quantitychange` | `POST` |  Adds   |updateCart |
 | `/api/order` | `POST` | Creates an order and adds it to the cart (??)  |  |
 | `*` | `*` |                   |  |
 | `*` | `*` |                   |  |

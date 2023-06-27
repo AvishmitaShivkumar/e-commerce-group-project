@@ -25,11 +25,15 @@ const getCompanies = async (request, response) => {
       : response
           .status(404)
           .json({ status: 404, message: "Companies not found" });
-  } catch (err) {
-    (err) => console.log(err);
-  } finally {
-    client.close();
-  }
+        } catch (error) {
+          console.error(`Internal error: ${error.stack}`);
+          response.status(500).json({
+            status: 500,
+            error: error.message,
+          });
+        } finally {
+          client.close();
+        }
 };
 
 module.exports = getCompanies;

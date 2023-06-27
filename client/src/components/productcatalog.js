@@ -13,6 +13,7 @@ const itemsByCategory = allItems.filter((item) => {
     if(item.category === category) {
       return item;
     }
+  return null
   });
 
   return (
@@ -25,7 +26,7 @@ const itemsByCategory = allItems.filter((item) => {
         itemsByCategory.map((item) => {
           return (
           <StyledLink to={`/products/${item._id}`} key={item._id}>
-            <img src={item.imageSrc}/>
+              <img src={item.imageSrc} alt={item.name} />
             <p>{item.price}</p>
             <p>{item.name}</p>
           </StyledLink>)

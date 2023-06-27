@@ -21,11 +21,15 @@ const batchImportCompanies = async () => {
       const db = client.db("ecommerce");
   
       const companiesImport = await db.collection("companies").insertMany(companies);
-      console.log(companiesImport)
     } catch (error) {
-      console.log(error);
+      console.error(`Internal error: ${error.stack}`);
+      response.status(500).json({
+        status: 500,
+        error: error.message,
+      });
+    } finally {
+      client.close();
     }
-    client.close();
 
   };
   
@@ -41,12 +45,15 @@ const batchImportCompanies = async () => {
       const db = client.db("ecommerce");
   
       const itemsImport = await db.collection("items").insertMany(items);
-      console.log(itemsImport)
     } catch (error) {
-      console.log(error);
+      console.error(`Internal error: ${error.stack}`);
+      response.status(500).json({
+        status: 500,
+        error: error.message,
+      });
+    } finally {
+      client.close();
     }
-    client.close();
-
   };
   
   batchImportItems();

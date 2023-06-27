@@ -31,12 +31,15 @@ const updateCart = async (req, res) => {
             res.status(400).json({ status: 400, message: "We do not have that many in stock" });
         }
 
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: 'Something went wrong.' });
-    } finally {
+    } catch (error) {
+        console.error(`Internal error: ${error.stack}`);
+        response.status(500).json({
+          status: 500,
+          error: error.message,
+        });
+      } finally {
         client.close();
-    }
+      }
 };
 
 module.exports = updateCart;
