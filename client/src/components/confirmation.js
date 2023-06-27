@@ -3,32 +3,33 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const Confirmation = () => {
-  const { orderId } = useParams();
-  const [ordered, setOrdered] = useState(null);
+  // const { orderId } = useParams();
+  // const [ordered, setOrdered] = useState(null);
 
-  useEffect(() => {
-    fetch(`/api/orders/${orderId}`)
-      .then((res) => res.json())
-      .then((parsed) => {
-        setOrdered(parsed.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(`/api/orders/${orderId}`)
+  //     .then((res) => res.json())
+  //     .then((parsed) => {
+  //       setOrdered(parsed.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
-  if (!ordered) {
-    return <div>Loading...</div>;
-  }
+  // if (!ordered) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <Container>
-      <ConfirmationHeader>Confirmation</ConfirmationHeader>
+      <p>test</p>
+      {/* <ConfirmationHeader>Confirmation</ConfirmationHeader>
       <Contents>{`Order #: ${ordered._id}`}</Contents>
       <Contents>{`Item #: ${ordered.item._id}`}</Contents>
       <Contents>{`Price: ${ordered.price}`}</Contents>
       <Contents>{`By: ${ordered.user.name}`}</Contents>
-      <Contents>{`We sent you a confirmation email via: ${ordered.user.email}`}</Contents>
+      <Contents>{`We sent you a confirmation email via: ${ordered.user.email}`}</Contents> */}
 
       {/* <div>{`Address: ${ordered.address}`}</div> */}
     </Container>
