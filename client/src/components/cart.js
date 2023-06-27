@@ -33,6 +33,8 @@ const Cart = () => {
   })
 }
 
+  console.log(cartItems)
+
   return (
     <>
     {!loading ? 

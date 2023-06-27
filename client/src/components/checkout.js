@@ -4,298 +4,195 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
-  const { itemId } = useParams();
-  const [ordered, setOrdered] = useState(null);
+    const { itemId } = useParams();
+    const [ordered, setOrdered] = useState(null);
+    const [loading, setLoading] = useState(true)
+    const [companyId, setCompanyId] = useState(null)
+    const [cart, setCart] = useState(null)
+    const [cartId, setCartId] = useState(null)
+    // const jsonCart = JSON.stringify(cart);
 
-  const user = localStorage.getItem("user")
-  const userId = JSON.parse(user);
-  
-  const navigate = useNavigate();
+    const user = localStorage.getItem("user");
+    const userId = JSON.parse(user);
 
-  const initialValue = {
-    fname: "",
-    lname: "",
-    address: "",
-    address2: "",
-    postalCode: "",
-    // email: "",
-    // phone: "",
-    creditNum: "",
-    nameOnCard: "",
-    expDate: "",
-    code: "",
-  };
+    const navigate = useNavigate();
 
-  const [formData, setFormData] = useState(initialValue);
-
-  const handleChange = (e) => {
-    const newData = { ...formData };
-    newData[e.target.id] = e.target.value;
-    setFormData(newData);
-    console.log(newData);
-  };
-
-
-
-  //In this post we want to post the USER data, make sure its called user, all you have to pass is the userId
-  //In this post we want to pass the ITEM data, this will pass the item Id
-  //and then COMPANIES all you have to pass is the company Id
-  //and then SHIPPING which you can pass all of the shipping data
-
-  //{
-  // 	"user": {
-  // 		"_id": "ec7c693d-9a85-4176-a75d-9fb4d1fb1b6c"
-  // 	},
-    
-  //   "items":
-  //     {
-  //       "_id": 6543
-  //     },
-    
-  // 	"companies":
-  //     {
-  //       "_id": 19962
-  //     },
-  // 		"shipping":
-  //     	{
-  //       	"address": "1 rue street",
-  // 				"postalCode": "APO STA"
-  //     	}
-  // }
-
-  //this will change later replace 6543 with the ${itemId}
-
-  useEffect(() => {
-    fetch(`/api/cart/${userId}/6543`)
-      .then((res) => res.json())
-      .then((parsed) => {
-        setOrdered(parsed.data);
-      })
-      .catch((error) => {
-        console.error(error)
-      });
-  }, []);
-
-  console.log(ordered)
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const body = {
-      user: {
-        _id: userId,
-      },
-      items: {
-        _id: ordered.itemId,
-      },
-      // companies: {
-      //   _id: companyId, // Replace with the actual company ID
-      // },
-      shipping: {
-        address: formData.address,
-        address2: formData.address2,
-        postalCode: formData.postalCode
-      },
+    const initialValue = {
+        fname: "",
+        lname: "",
+        address: "",
+        address2: "",
+        postalCode: "",
     };
 
+    const [formData, setFormData] = useState(initialValue);
+
+    const handleChange = (e) => {
+        const newData = { ...formData };
+        newData[e.target.id] = e.target.value;
+        setFormData(newData);
+    };
+
+    useEffect(() => {
+      const newArray = []
+      
+      if(cart){
+        cart.forEach((item)=>{
+        newArray.push(item._id)
+        })
+        setCartId(newArray.pop())
+        
+      }
+    },[cart])
+    
+
+    useEffect(() => {
+        fetch(`/api/user/${userId}`)
+        .then((res) => res.json())
+        .then((parsed) => {
+            setOrdered(parsed.data);
+            setCart(parsed.data.cart)
+            setLoading(false)
+        
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }, []);
 
 
-    fetch("/api/orders", {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        const body = {
+            user: userId,
+            cart: cartId,
+            shipping: {
+                address: formData.address,
+                address2: formData.address2,
+                postalCode: formData.postalCode,
+            },
+        };
 
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    })
-      .then((res) => res.json())
-      .then((parsed) => {
-        if (parsed.status === 200) {
-          navigate(`/confirmation/${parsed.data.id}`);
-        }
-      });
-  };
+        fetch("/api/orders", {
+            method: "POST",
+            headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            },
+                body: JSON.stringify(body),
+        })
+        .then((res) => res.json())
+        .then((parsed) => {
+                navigate(`/confirmation`);
+        });
+        
+    };
 
-  console.log(formData)
+    if (loading) {
+        return (
+            <p>loading...</p>
+        )
+    }
 
-  return (
-    <Container onSubmit={handleSubmit}>
-      <CheckoutHeader>Checkout</CheckoutHeader>
-      <DivLeft>
-        <ItemDiv>
-          <YourItems>Your Items</YourItems>
-          <ItemGroup>
-            {/* <Img src={ordered.imageSrc} /> */}
-            {/* I need to get the item image source from the cart page */}
-            <Img />
-            <div>
-              {/* <ItemName>{ordered.name}</ItemName> */}
-              {/* I need to get the item name from the cart page */}
-              <ItemInfo>adfadgdgdadhahdh</ItemInfo>
-              {/* <ItemInfo>{ordered.price}</ItemInfo> */}
-              {/* I need to get the item price from the cart page */}
-              <ItemInfo>$100</ItemInfo>
-              {/* I need to get the item qty from the cart page */}
-              <ItemInfo>Qty: 1</ItemInfo>
-            </div>
-          </ItemGroup>
-        </ItemDiv>
-        <Form>
-          <CoustomerInfo>Shipping information</CoustomerInfo>
-          <InputContainer>
-            <Label htmlFor="fname">First Name:</Label>
-            <Input
-              onChange={handleChange}
-              value={formData.fname}
-              type="text"
-              id="fname"
-              name="fname"
-              required
-            />
-          </InputContainer>
-          <InputContainer>
-            <Label htmlFor="lname">Last Name:</Label>
-            <Input
-              onChange={handleChange}
-              value={formData.lname}
-              type="text"
-              id="lname"
-              name="lname"
-              required
-            />
-          </InputContainer>
-          <InputContainer>
-            <Label htmlFor="address">Address:</Label>
-            <Input
-              onChange={handleChange}
-              value={formData.address}
-              type="text"
-              id="address"
-              name="address"
-              placeholder="1234 Main St"
-              required
-            />
-          </InputContainer>
-          <InputContainer>
-            <Label htmlFor="address2">Address 2 (Optional):</Label>
-            <Input
-              onChange={handleChange}
-              value={formData.address2}
-              type="text"
-              id="address2"
-              name="address2"
-              placeholder="Apartment or suite"
-              required
-            />
-          </InputContainer>
-          <InputContainer>
-            <Label htmlFor="address2">Postal code:</Label>
-            <Input
-              onChange={handleChange}
-              value={formData.postalcode}
-              type="text"
-              id="postalcode"
-              name="postalcode"
-              placeholder="A0A 0A0"
-              required
-            />
-          </InputContainer>
-          {/* <InputContainer>
-            <Label htmlFor="email">E-mail:</Label>
-            <Input
-              onChange={handleChange}
-              value={formData.email}
-              type="email"
-              id="email"
-              name="email"
-              placeholder="example@email.com"
-              required
-            />
-          </InputContainer>
-          <InputContainer>
-            <Label htmlFor="phone">Phone Number:</Label>
-            <Input
-              onChange={handleChange}
-              value={formData.phone}
-              type="text"
-              id="phone"
-              name="phone"
-              placeholder="111-111-1111"
-              required
-            />
-          </InputContainer> */}
+    return (
+        <Container>
+            <CheckoutHeader>Checkout</CheckoutHeader>
+            <DivLeft>
+                <ItemDiv>
+                <YourItems>Your Items</YourItems>
+                {ordered.cart.map((item) => {
+
+                    return (
+                        <ItemGroup key={item._id}>
+                            <Img src={item.imageSrc}/>
+                                <div>
+                                    <ItemInfo>{item.name}</ItemInfo>
+                                    <ItemInfo>Price per Item{item.price}</ItemInfo>
+                                    <ItemInfo>Qty: {item.quantity}</ItemInfo>
+                                </div>
+                        </ItemGroup>
+                    );
+                })}
+                </ItemDiv>
+        <Form onSubmit={handleSubmit}>
+            <CoustomerInfo>Shipping information</CoustomerInfo>
+            <InputContainer>
+                <Label htmlFor="fname">First Name:</Label>
+                <Input
+                onChange={handleChange}
+                value={formData.fname}
+                type="text"
+                id="fname"
+                name="fname"
+                required
+                />
+            </InputContainer>
+            <InputContainer>
+                <Label htmlFor="lname">Last Name:</Label>
+                <Input
+                onChange={handleChange}
+                value={formData.lname}
+                type="text"
+                id="lname"
+                name="lname"
+                required
+                />
+            </InputContainer>
+            <InputContainer>
+                <Label htmlFor="address">Address:</Label>
+                <Input
+                
+                value={formData.address}
+                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                type="text"
+                id="address"
+                name="address"
+                placeholder="1234 Main St"
+                required
+                />
+            </InputContainer>
+            <InputContainer>
+                <Label htmlFor="address2">Address 2 (Optional):</Label>
+                <Input
+                value={formData.address2}
+                onChange={(e) => setFormData({ ...formData, address2: e.target.value })}
+                type="text"
+                id="address2"
+                name="address2"
+                placeholder="Apartment or suite"
+                />
+            </InputContainer>
+            <InputContainer>
+                <Label htmlFor="address2">Postal code:</Label>
+                <Input
+                
+                value={formData.postalcode}
+                onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
+                type="text"
+                id="postalcode"
+                name="postalcode"
+                placeholder="A0A 0A0"
+                required
+                />
+            </InputContainer>
+      
+
+        <OrderSummeryContainer>
+            <OrderSummery>Order Summary</OrderSummery>
+            <SummaryDiv>
+            <Summary>Items: ITEM_PRICE</Summary>
+            <Summary>Shipping: $10</Summary>
+            <Summary>Tax: 5%</Summary>
+            </SummaryDiv>
+            <OrderTotal>Order Total: </OrderTotal>
+            <OrderButton type="submit">Order now</OrderButton>
+        </OrderSummeryContainer>
+
         </Form>
-
-        <Form>
-          <PaymentInfo>Payment</PaymentInfo>{" "}
-          <InputContainer>
-            <Label htmlFor="creditNum">Card number:</Label>
-            <Input
-              onChange={handleChange}
-              value={formData.creditNum}
-              type="text"
-              id="creditNum"
-              name="creditNum"
-              placeholder="0000-0000-0000-0000"
-              minlength="19"
-              maxlength="19"
-              required
-            />
-          </InputContainer>
-          <InputContainer>
-            <Label htmlFor="nameOnCard">Name on card:</Label>
-            <Input
-              onChange={handleChange}
-              value={formData.nameOnCard}
-              type="text"
-              id="nameOnCard"
-              name="nameOnCard"
-              required
-            />
-          </InputContainer>
-          <InputContainer>
-            <Label htmlFor="expDate">Expiration date:</Label>
-            <Input
-              onChange={handleChange}
-              value={formData.expDate}
-              type="text"
-              id="expDate"
-              name="expDate"
-              placeholder="MM/YY"
-              minlength="5"
-              maxlength="5"
-              required
-            />
-          </InputContainer>
-          <InputContainer>
-            <Label htmlFor="code">Security code (CVV/CVC):</Label>
-            <Input
-              onChange={handleChange}
-              value={formData.code}
-              type="text"
-              id="code"
-              name="code"
-              minlength="3"
-              maxlength="4"
-              required
-            />
-          </InputContainer>
-        </Form>
-      </DivLeft>
-
-      <OrderSummeryContainer>
-        <OrderSummery>Order Summary</OrderSummery>
-        <SummaryDiv>
-          <Summary>Items: ITEM_PRICE</Summary>
-          <Summary>Shipping: $10</Summary>
-          <Summary>Tax: 5%</Summary>
-        </SummaryDiv>
-        <OrderTotal>Order Total: </OrderTotal>
-        <OrderButton type="submit">Order now</OrderButton>
-      </OrderSummeryContainer>
-    </Container>
-  );
+        </DivLeft>
+        </Container>
+    );
 };
 
 export default Checkout;
