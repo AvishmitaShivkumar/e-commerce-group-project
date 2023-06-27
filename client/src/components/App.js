@@ -14,16 +14,19 @@ import SignUp from "./signup";
 import GlobalStyles from "./globalstyles";
 import ContactSupport from "./contact";
 import SignUpConfirmation from "./SignUpConfirmation";
+import { useState } from "react";
 
 function App() {
+  const [finalTotal, setFinalTotal] = useState(0)
+
   return (
     <BrowserRouter>
       <GlobalStyles />
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/cart" element={<Cart finalTotal={finalTotal} setFinalTotal={setFinalTotal}/>} />
+        <Route path="/checkout" element={<Checkout finalTotal={finalTotal}/>} />
         <Route path="/company/:_id" element={<CompanyPage />} />
         {/* <Route path="/confirmation" element={<Confirmation />} /> */}
         <Route path="/confirmation/:orderId" element={<Confirmation />} />

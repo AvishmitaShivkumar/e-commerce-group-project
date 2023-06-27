@@ -2,11 +2,10 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 
-const Cart = () => {
+const Cart = ({ finalTotal, setFinalTotal}) => {
 
   const [cartItems, setCartItems] = useState()
   const [loading, setLoading] = useState(false)
-  const [total, setTotal] = useState()
 
   const user = localStorage.getItem("user")
   const userId = JSON.parse(user);
@@ -25,15 +24,31 @@ const Cart = () => {
   })
   ),[])
 
-  let finalTotal = 0
-  if(cartItems !==undefined){
-  const newTotal = cartItems.forEach((item)=>{
-    const something = item.price.slice(1)*item.quantity
-    finalTotal = something+finalTotal
-  })
-}
+    // useEffect(() => {
 
-  console.log(cartItems)
+    //     if (cartItems) {
+    //       const newTotal = cartItems.forEach((item)=>{
+    //       const something = item.price.slice(1)*item.quantity
+    //       const theTotal = something*1.05
+    //       setFinalTotal(theTotal+finalTotal)
+    //     })
+    //     }
+    // }, [])
+    
+
+    useEffect(() => {
+      let sum = 0
+      if(cartItems !==undefined){
+        cartItems.forEach((item)=>{
+        const something = item.price.slice(1)*item.quantity
+        sum += something
+        
+        
+      })
+      setFinalTotal(sum.toFixed(2))
+    }
+    },[cartItems])
+    
 
   return (
     <>

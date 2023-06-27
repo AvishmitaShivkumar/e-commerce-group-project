@@ -60,7 +60,7 @@ const checkOut = async (request, response) => {
             }
             
         }
-        response.status(200).json({ status: 200 });
+        response.status(200).json({ status: 200, data:newId});
 
     } catch (err) {
         console.log(err);
