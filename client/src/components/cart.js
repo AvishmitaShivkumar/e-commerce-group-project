@@ -92,30 +92,30 @@ const Cart = ({ finalTotal, setFinalTotal}) => {
 }
 
 const Container = styled.div`
-display:flex;
+display: flex;
 flex-direction: column;
 justify-content: center;
-margin-top:2rem;
+margin:2rem 0 4rem;
 `
 
 const CartTitle = styled.h1`
 display: flex;
 justify-content: center;
-font-size: 4rem;
+font-size: 3rem;
 `
 
 const Items = styled.ul`
-font-size: 3rem;
+font-size: 2rem;
 `
 
 
 const ItemName = styled.li`
-font-size: 1.5rem;
+font-size: 1.3rem;
 margin-top: 2rem;
 `
 
 const ItemPrice = styled.li`
-font-size: 1.5rem;
+font-size: 1.3rem;
 margin-top: 1rem;
 `
 
@@ -124,12 +124,12 @@ margin-left: 1rem;
 `
 
 const ItemQuantity = styled.li`
-font-size: 1.5rem;
+font-size: 1.3rem;
 margin-top: 1rem;
 `
 
 const TotalPerItem = styled.li`
-font-size: 1.5rem;
+font-size: 1.3rem;
 margin-top: 1rem;
 `
 
@@ -151,11 +151,9 @@ const ItemsDiv = styled.div`
   align-items: center;
   max-width: 1200px;
     margin: auto;
-    margin-top: 5rem;
     background-color: var(--color-secondary);
     padding: 4rem;
 `
-
 
 
 const Left = styled.div`
@@ -172,13 +170,14 @@ const CartDiv = styled.div`
 font-size: 2.5rem;
 min-height: 35rem;
 margin: 2rem;
+margin-bottom: 0;
 padding: 2rem;
 `
 
 const TotalOfCart = styled.h2`
 text-align: center;
-font-size: 3rem;
-margin: 5rem 0 1rem;
+font-size: 2rem;
+margin: 3rem 0 1rem;
 `
 
 const CheckoutDiv = styled.div`
@@ -189,7 +188,62 @@ justify-content: center;
 const Checkout = styled(Link)`
   align-items: center;
   background-color: var(--color-secondary);
-  padding: 20px 40px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: var(--color-accent);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  /* width: auto; */
+  width: 20rem;
+
+&:hover,
+&:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: rgba(217,60,28,0.65);
+}
+
+&:hover {
+  transform: translateY(-1px);
+  
+}
+
+&:active {
+  background-color: var(--color-secondary);
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: var(--color-accent);
+  transform: translateY(0);
+}
+
+&:disabled{  
+  color: var(--color-secondary);
+  background-color: rgba(10,10,51,0.4) ;
+    background-color: var(--color-primary);
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+
+
+  /* padding: 20px 40px;
   margin-top: 1em;
   width: 300px;
   border-radius: 10px;
@@ -207,8 +261,8 @@ const Checkout = styled(Link)`
     background: #707070;
     opacity: 0.4;
     cursor: not-allowed;
-  }
-`
+  } */
+`;
 
 
 
