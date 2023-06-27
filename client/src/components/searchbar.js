@@ -191,9 +191,6 @@ const SearchIcon = styled.button`
   background-color: white;
   border: none;
   color: var(--color-navy);
-/* &:focus {
-    outline: 0.2rem solid var(--color-navy);
-  } */
 `;
 
 const Search = styled.div`
@@ -226,7 +223,7 @@ const Suggestions = styled.div`
   max-height:350px;
   overflow-y: scroll;
   overflow-x: hidden;
-  top: 2.1rem;
+  top: 3rem;
   right:2.9rem;
   background-color: white;
 `;

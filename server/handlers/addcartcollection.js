@@ -38,12 +38,15 @@ const cartCollection = async (request, response) => {
             response.status(200).json({ status: 200, data: result });
         }
 
-
-    } catch (err) {
-        console.log(err);
-    } finally {
+    } catch (error) {
+        console.error(`Internal error: ${error.stack}`);
+        response.status(500).json({
+          status: 500,
+          error: error.message,
+        });
+      } finally {
         client.close();
-    }
+      }
 };
 
 module.exports = cartCollection

@@ -31,8 +31,10 @@ const ProductPage = () => {
   
   return (
     <>
-    {!oneItem ? <Loader/> :
+      {!oneItem ? <Loader /> :
+        <Container>
       <ItemComponent oneItem={oneItem} company={company}/>
+      </Container>
     }
     </>
   )
@@ -40,6 +42,9 @@ const ProductPage = () => {
 }
 
 const Container = styled.div`
+display: flex;
+justify-content: center;
+align-items:center;
 `
 
 

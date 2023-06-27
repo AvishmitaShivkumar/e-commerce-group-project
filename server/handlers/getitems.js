@@ -1,6 +1,5 @@
 'use strict';
 const { MongoClient } = require("mongodb");
-const { v4: uuidv4 } = require('uuid');
 
 require("dotenv").config();
 const { MONGO_URI } = process.env;
@@ -23,9 +22,12 @@ const getItems = async (request, response) => {
     result
         ? response.status(200).json({ status: 200, data: result })
         : response.status(404).json({ status: 404, data: "Not Found" });
-  } catch(err) {err => console.log(err)}
-  finally { client.close()};
-
+      } catch (error) {
+        console.error(`Internal error: ${error.stack}`);
+        response.status(500).json({status: 500, error: error.message});
+    } finally {
+        client.close();
+    }
 }
 
 module.exports = getItems

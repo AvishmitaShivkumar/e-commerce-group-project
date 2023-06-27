@@ -25,8 +25,15 @@ const getUsers = async (request, response) => {
     users
         ? response.status(200).json({ status: 200, data: users })
         : response.status(404).json({ status: 404, message: "Users not found" });
-  } catch(err) {err => console.log(err)}
-  finally { client.close()};
+      } catch (error) {
+        console.error(`Internal error: ${error.stack}`);
+        response.status(500).json({
+          status: 500,
+          error: error.message,
+        });
+      } finally {
+        client.close();
+      }
 }
 
 module.exports = getUsers

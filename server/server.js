@@ -15,7 +15,7 @@ const deleteCartItem = require("./handlers/deletesingleitem");
 const cartCollection = require("./handlers/addcartcollection");
 const updateCart = require("./handlers/cartquantitychange");
 const checkOut = require("./handlers/checkout");
-const { getUserCart } = require("./handlers/getusercart");
+const { getUserCart } = require("./handlers/getUserCart");
 const { getOrder } = require("./handlers/getOrder");
 
 
