@@ -1,7 +1,40 @@
 import { Link, useParams } from "react-router-dom";
 import { styled } from "styled-components";
+import { UserContext } from "./UserContext";
+import { useContext } from "react";
 
 const ItemComponent = ({oneItem, company}) => {
+
+  const user = localStorage.getItem("user")
+  const userId = JSON.parse(user);
+
+
+  const addToCartClick = (event) => {
+    event.preventDefault();
+    fetch("/api/cartcollection", {
+      method: "POST",
+      body: JSON.stringify(
+        {
+          "userId": {
+            "_id": userId
+          },
+          "items": oneItem
+        }),
+      headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+      }
+  })
+      .then((response) => response.json())
+      .then((parsed) => {
+          if(parsed.status === 200){
+            window.alert("This item has been added to your cart!")
+          }
+      })
+      .catch((error) => {
+          window.alert(error)
+      })
+  }
 
     return (
         <ItemContainer>
@@ -15,7 +48,7 @@ const ItemComponent = ({oneItem, company}) => {
         <p>Body location: {oneItem.body_location}</p>
         <p>Category: {oneItem.category}</p>
                 <Link to={`/company/${oneItem.companyId}`} style={{color: "var(--color-ocean)", cursor: "pointer"}}><p>Made by: {company.name}</p></Link>
-        <Button disabled={oneItem.numInStock === 0}>
+        <Button disabled={oneItem.numInStock === 0} onClick={addToCartClick}>
         {oneItem.numInStock > 0 ? "Add to cart" : "Out of stock"}
         </Button>
         </InformationContainer>
