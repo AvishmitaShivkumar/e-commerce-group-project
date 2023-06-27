@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import Loader from "./Loader";
 
 const Confirmation = () => {
   const { orderId } = useParams();
@@ -18,23 +19,22 @@ const Confirmation = () => {
   }, []);
 
   if (!ordered) {
-    return <div>Loading...</div>;
+    return <Loader/>;
   }
 
   return (
     <Container>
       <ConfirmationHeader>Confirmation</ConfirmationHeader>
+      <Contents>Thanks for your order!!</Contents>
       <Contents>{`Order #: ${ordered._id}`}</Contents>
-      <Contents>{`Item #: ${ordered.item._id}`}</Contents>
-      <Contents>{`Price: ${ordered.price}`}</Contents>
-      <Contents>{`By: ${ordered.user.name}`}</Contents>
-      <Contents>{`We sent you a confirmation email via: ${ordered.user.email}`}</Contents>
-
-      {/* <div>{`Address: ${ordered.address}`}</div> */}
+      <Contents>{`Item : ${ordered.Items.name}`}</Contents>
+      <Contents>{`Price: ${ordered.Items.price}`}</Contents>
+      <Contents>{`By: ${ordered.email}`}</Contents>
+      <Contents>{`We sent you a confirmation email to: ${ordered.email}`}</Contents>
+      <Contents>{`Address: ${ordered.shipping.address}`}</Contents>
     </Container>
   );
 };
-
 export default Confirmation;
 
 const Container = styled.div``;
