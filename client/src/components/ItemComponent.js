@@ -163,24 +163,4 @@ const Button = styled.button`
     opacity: 0.4; */
     cursor: not-allowed;
 }
-
-  /* background-color: var(--color-navy);
-  padding: 20px 40px;
-  margin-top: 1em;
-  width: 70%;
-  border-radius: 10px;
-  color: white;
-  font-size: x-large;
-  justify-self: center;
-
-  &:hover {
-    background: var(--color-ocean);
-    cursor: pointer;
-  }
-
-  &:disabled {
-    background: #707070;
-    opacity: 0.4;
-    cursor: not-allowed;
-  } */
 `;

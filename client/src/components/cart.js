@@ -46,7 +46,7 @@ const Cart = () => {
       <CartTitle>Cart</CartTitle>
       <CartDiv>
       <ItemsDiv>
-      <Items>Items:
+      <Items>Items
         {cartItems.map((item)=>{
           return (<>
           <ItemDiv key={item._id}>
@@ -125,8 +125,8 @@ const ItemDiv = styled.div`
   align-items: center;
   max-width: 1200px;
     margin: auto;
-    margin-top: 5rem;
-  border: 0.25rem solid black;
+    margin-top: 2rem;
+  background-color: white;
   padding:2rem;
 `
 const ItemsDiv = styled.div`
@@ -137,6 +137,8 @@ const ItemsDiv = styled.div`
   max-width: 1200px;
     margin: auto;
     margin-top: 5rem;
+    background-color: var(--color-secondary);
+    padding: 4rem;
 `
 
 
@@ -152,7 +154,6 @@ align-items: center;
 
 
 const CartDiv = styled.div`
-border: 0.1rem solid black;
 font-size: 2.5rem;
 min-height: 35rem;
 margin: 2rem;
@@ -171,7 +172,8 @@ justify-content: center;
 `
 
 const Checkout = styled(Link)`
-background-color: var(--color-navy);
+  align-items: center;
+  background-color: var(--color-secondary);
   padding: 20px 40px;
   margin-top: 1em;
   width: 300px;
@@ -194,4 +196,7 @@ background-color: var(--color-navy);
 `
 
 
+
+
 export default Cart
+
