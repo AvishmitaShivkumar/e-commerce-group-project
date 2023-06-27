@@ -155,15 +155,41 @@ const Bottom = styled.div`
 `;
 
 const Left = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  margin: 2rem;
-  border-radius: 5%;
-`;
+width: 50%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+background-color: white;
+margin: 2rem;
+border-radius: 5%;
+position: relative;
+`
+
+// const Left = styled.div`
+// width: 50%;
+// display: flex;
+// flex-direction: column;
+// justify-content: center;
+// align-items: center;
+// /* background-color: white; */
+// background: rgb(2,0,36);
+// background: linear-gradient(90deg, rgba(2,0,36,0) 0%, rgba(255,255,255,1) 25%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 75%, rgba(0,212,255,0) 100%); 
+// margin: 2rem;
+// border-radius: 5%;
+// position: relative;
+
+// &::after{
+//   position: absolute;
+//   content: "";
+//   height: 100%;
+//   width: 100%;
+//   top: 0;
+//   /* background-color:rgba(255,255,255,0.1); */
+  
+//   border-radius: 5%;
+// }
+// `
 
 const Right = styled.div`
   width: 50%;
