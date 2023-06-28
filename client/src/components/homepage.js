@@ -96,7 +96,7 @@ const HomePage = () => {
 };
 
 const Container = styled.div`
-  height: 105vh;
+  height: 108vh;
 `;
 
 const UpperBanner = styled(Link)`
