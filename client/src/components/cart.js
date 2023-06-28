@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import Loader from "./Loader"
 
@@ -10,7 +10,8 @@ const Cart = ({ finalTotal, setFinalTotal}) => {
 
   const user = localStorage.getItem("user")
   const userId = JSON.parse(user);
-
+  const navigate = useNavigate()
+  
   useEffect(()=>(
   fetch(`/api/user/${userId}`)
   .then((response) => response.json())
@@ -23,18 +24,8 @@ const Cart = ({ finalTotal, setFinalTotal}) => {
   .catch((error) => {
       console.log(error)
   })
-  ),[])
+  ),[userId])
 
-    // useEffect(() => {
-
-    //     if (cartItems) {
-    //       const newTotal = cartItems.forEach((item)=>{
-    //       const something = item.price.slice(1)*item.quantity
-    //       const theTotal = something*1.05
-    //       setFinalTotal(theTotal+finalTotal)
-    //     })
-    //     }
-    // }, [])
     
 
     useEffect(() => {
@@ -50,21 +41,41 @@ const Cart = ({ finalTotal, setFinalTotal}) => {
     }
     },[cartItems])
     
+  const removeItemFromCart = (itemId) => {
+    fetch(`/api/delete/cart/${userId}/items/${itemId}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 200) {
+          window.alert("The item was removed from your cart")
+          window.location.reload(true);
+        } else {
+          window.alert(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
   return (
     <>
     {!loading ? 
-    <p>
       <Loader/>
-      </p> :
+       :
     <Container>
       <CartTitle>Cart</CartTitle>
       <CartDiv>
       <ItemsDiv>
       <Items>Items
-        {cartItems.map((item)=>{
+        {cartItems.map((item, index)=>{
           return (<>
-          <ItemDiv key={item._id}>
+          <ItemDiv key={`${item._id}-${index}`}>
             <Left>
               <ItemName>{item.name}</ItemName>
               <ItemPrice>Price: {item.price}</ItemPrice>
@@ -73,7 +84,10 @@ const Cart = ({ finalTotal, setFinalTotal}) => {
             </Left>
             <Right>
               <ItemImg src={item.imageSrc}/>
-            </Right>
+              </Right>
+              <Rightest>
+                <RemoveButton onClick={()=>removeItemFromCart(item._id)}>Remove Item</RemoveButton>
+              </Rightest>
           </ItemDiv>
           </>)
         })}
@@ -163,6 +177,59 @@ const Right = styled.div`
 display:flex;
 justify-content: center;
 align-items: center;
+`
+const Rightest = styled.div`
+
+`
+
+const RemoveButton = styled.button`
+  align-items: center;
+  background-color: var(--color-accent);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: var(--color-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  margin-top: .8rem;
+  min-height: 3rem;
+  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  /* width: auto; */
+  width: auto;
+
+&:hover,
+&:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: rgba(217,60,28,0.65);
+}
+
+&:hover {
+  transform: translateY(-1px);
+  
+}
+
+&:active {
+  background-color: var(--color-secondary);
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: var(--color-accent);
+  transform: translateY(0);
+}
 `
 
 
