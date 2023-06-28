@@ -15,7 +15,7 @@ import GlobalStyles from "./globalstyles";
 import ContactSupport from "./contact";
 import SignUpConfirmation from "./SignUpConfirmation";
 import { UserContext } from "./UserContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 function App() {
 
