@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { UserContext } from "./UserContext";
 import { useContext, useState } from "react";
@@ -6,15 +6,22 @@ import { useContext, useState } from "react";
 
 const ItemComponent = ({oneItem, company}) => {
 
-  const [loading, setLoading] = useState(false)
+  const {currentUser} = useContext(UserContext);
+
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const user = localStorage.getItem("user")
   const userId = JSON.parse(user);
 
 
   const addToCartClick = (event) => {
-    setLoading(true)
+    setLoading(true);
     event.preventDefault();
+    if(currentUser === null){
+      navigate("/signin")
+    }
+    else{
     fetch("/api/cartcollection", {
       method: "POST",
       body: JSON.stringify(
@@ -38,7 +45,7 @@ const ItemComponent = ({oneItem, company}) => {
       })
       .catch((error) => {
           window.alert(error)
-      })
+      })}
   }
 
     return (
