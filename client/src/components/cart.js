@@ -208,14 +208,13 @@ const RemoveButton = styled.button`
   -webkit-user-select: none;
   touch-action: manipulation;
   vertical-align: baseline;
-  /* width: auto; */
   width: auto;
 
 &:hover,
 &:focus {
   border-color: rgba(0, 0, 0, 0.15);
   box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
-  color: rgba(217,60,28,0.65);
+  color: rgba(239,222,205,0.65);
 }
 
 &:hover {
@@ -277,7 +276,6 @@ const Checkout = styled(Link)`
   -webkit-user-select: none;
   touch-action: manipulation;
   vertical-align: baseline;
-  /* width: auto; */
   width: 20rem;
 
 &:hover,
@@ -307,28 +305,6 @@ const Checkout = styled(Link)`
     opacity: 0.4;
     cursor: not-allowed;
 }
-
-
-
-  /* padding: 20px 40px;
-  margin-top: 1em;
-  width: 300px;
-  border-radius: 10px;
-  color: white;
-  font-size: x-large;
-  justify-self: center;
-  margin-bottom: 4rem;
-
-  &:hover {
-    background: var(--color-ocean);
-    cursor: pointer;
-  }
-
-  &:disabled {
-    background: #707070;
-    opacity: 0.4;
-    cursor: not-allowed;
-  } */
 `;
 
 

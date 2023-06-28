@@ -140,25 +140,49 @@ const Input = styled.input`
 `;
 
 const SignUpButton = styled.button`
-  color: white;
+  align-items: center;
   background-color: var(--color-primary);
-  font-size: 1.5rem;
-  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: var(--color-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
   text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
   width: 10rem;
-  height: 2.5rem;
-  border-radius: 2rem;
-  border: none;
-  margin-top: 1rem;
 
-  &:hover {
-    background-color: var(--color-accent);
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.5) 0 4px 12px;
-    transform: translateY(-1px);
-  }
+&:hover,
+&:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color:  rgba(239,222,205,0.65);
+}
 
-  transition: ease-in-out 0.2s;
+&:hover {
+  transform: translateY(-1px);
+  
+}
+
+&:active {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: var(--color-secondary);
+  transform: translateY(0);
+}
 `;
 const ButtonDiv = styled.div`
   display: flex;

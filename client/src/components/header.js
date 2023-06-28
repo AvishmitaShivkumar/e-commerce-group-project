@@ -80,7 +80,6 @@ opacity: .5;
 `
 const LogoLink = styled(StyledNavlink)`
 color: var(--color-primary);
-text-shadow: 2px 2px var(--color-secondary);
 -webkit-text-stroke: 1px var(--color-secondary);
 font-size: 1.4rem;
 font-weight: bold;
