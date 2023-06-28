@@ -36,8 +36,11 @@ const SignUp = () => {
         if (parsed.status === 200) {
           localStorage.setItem("user", JSON.stringify(parsed.userId));
           navigate("/signupconfirmation");
-        } else if (parsed.status === 400) {
-          setErrorMessage("Email is already taken. Please choose a different email.");
+        } else if (parsed.status === 400 && parsed.message !== "A user with this email already exists. Please sign in") {
+          setErrorMessage("Missing data");
+        } else {
+          setErrorMessage(parsed.message);
+
         }
       })
       .catch((error) => {

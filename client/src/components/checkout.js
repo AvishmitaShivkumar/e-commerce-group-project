@@ -1,17 +1,13 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Loader from "./Loader";
 
 const Checkout = ({ finalTotal }) => {
-    const { itemId } = useParams();
     const [ordered, setOrdered] = useState(null);
     const [loading, setLoading] = useState(true)
-    const [companyId, setCompanyId] = useState(null)
     const [cart, setCart] = useState(null)
     const [cartId, setCartId] = useState(null)
-    // const jsonCart = JSON.stringify(cart);
 
     const user = localStorage.getItem("user");
     const userId = JSON.parse(user);
@@ -93,7 +89,7 @@ const Checkout = ({ finalTotal }) => {
 
     if (loading) {
         return (
-            <p><Loader/></p>
+            <Loader/>
         )
     }
 
@@ -115,7 +111,7 @@ const Checkout = ({ finalTotal }) => {
                                     <Img src={item.imageSrc}/>
                                         <div>
                                             <ItemInfo>{item.name}</ItemInfo>
-                                            <ItemInfo>Price per Item{item.price}</ItemInfo>
+                                            <ItemInfo>Price per Item {item.price}</ItemInfo>
                                             <ItemInfo>Qty: {item.quantity}</ItemInfo>
                                         </div>
                                 </ItemGroup>
@@ -233,11 +229,11 @@ const Checkout = ({ finalTotal }) => {
                     <OrderSummeryContainer>
                         <OrderSummery>Order Summary</OrderSummery>
                         <SummaryDiv>
-                            <Summary>Items:{finalTotal}</Summary>
+                            <Summary>Subtotal: ${finalTotal}</Summary>
                             <Summary>Shipping: $10</Summary>
                             <Summary>Tax: 5%</Summary>
                         </SummaryDiv>
-                        <OrderTotal>Order Total: {(finalTotal*1.05+10).toFixed(2)}</OrderTotal>
+                        <OrderTotal>Order Total: ${(finalTotal*1.05+10).toFixed(2)}</OrderTotal>
                         <OrderButton type="submit">Order now</OrderButton>
                     </OrderSummeryContainer>
 

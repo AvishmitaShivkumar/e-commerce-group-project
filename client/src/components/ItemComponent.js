@@ -59,7 +59,7 @@ const ItemComponent = ({oneItem, company}) => {
         <ItalicParagraph>{oneItem.numInStock} in stock</ItalicParagraph>
         <p>Body location: {oneItem.body_location}</p>
         <p>Category: {oneItem.category}</p>
-                <Link to={`/company/${oneItem.companyId}`} style={{color: "var(--color-ocean)", cursor: "pointer"}}><p>Made by: {company.name}</p></Link>
+                <p><StyledLink to={`/company/${oneItem.companyId}`}> Made by: {company.name} </StyledLink></p>
         <Button disabled={oneItem.numInStock === 0} onClick={addToCartClick}>
         {!oneItem.numInStock > 0 ? "Out of stock" : loading ? "Adding to cart..."  : "Add to cart"}
         </Button>
@@ -80,6 +80,7 @@ const ItemContainer = styled.div`
   padding: 2em;
   box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
   `;
+
 
 const BigImage = styled.img`
   width: 80%;
@@ -171,3 +172,13 @@ const Button = styled.button`
     cursor: not-allowed;
 }
 `;
+
+const StyledLink = styled(Link)`
+color: var(--color-accent);
+cursor: "pointer";
+
+&:hover {
+  opacity: .6;
+}
+
+`

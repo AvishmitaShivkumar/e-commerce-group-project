@@ -25,7 +25,7 @@ const Cart = ({ finalTotal, setFinalTotal }) => {
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         }),
     [userId]
   );

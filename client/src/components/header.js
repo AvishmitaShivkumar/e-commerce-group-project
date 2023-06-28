@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { AiOutlineShoppingCart} from "react-icons/ai";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SearchBar from "./searchbar";
 import { useContext } from "react";

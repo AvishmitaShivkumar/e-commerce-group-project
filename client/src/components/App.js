@@ -8,18 +8,14 @@ import Error from "./error";
 import Header from "./header";
 import ProductCatalog from "./productcatalog";
 import ProductPage from "./productpage";
-import SearchPage from "./searchpage";
 import SignIn from "./signin";
 import SignUp from "./signup";
 import GlobalStyles from "./globalstyles";
-import ContactSupport from "./contact";
 import SignUpConfirmation from "./SignUpConfirmation";
-import { UserContext } from "./UserContext";
-import { useContext, useState } from "react";
+import {useState } from "react";
 
 function App() {
 
-    const {currentUser} = useContext(UserContext);
     const [finalTotal, setFinalTotal] = useState(0)
 
 
@@ -32,15 +28,12 @@ function App() {
         <Route path="/cart" element={<Cart finalTotal={finalTotal} setFinalTotal={setFinalTotal}/> }/>
         <Route path="/checkout" element={<Checkout finalTotal={finalTotal}/>} />
         <Route path="/company/:_id" element={<CompanyPage />} />
-        {/* <Route path="/confirmation" element={<Confirmation />} /> */}
         <Route path="/confirmation/:orderId" element={<Confirmation />} />
         <Route path="/catalog/:category" element={<ProductCatalog />} />
         <Route path="/products/:product" element={<ProductPage />} />
-        <Route path="/searchpage" element={<SearchPage />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signupconfirmation" element={<SignUpConfirmation />} />
-        <Route path="/contactsupport" element={<ContactSupport />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>

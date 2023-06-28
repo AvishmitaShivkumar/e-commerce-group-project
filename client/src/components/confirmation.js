@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Loader from "./Loader";
+import { UserContext } from "./UserContext";
 
 const Confirmation = () => {
 
   const { orderId } = useParams();
   const [ordered, setOrdered] = useState(null);
-  // console.log("🚀 ~ file: confirmation.js:10 ~ Confirmation ~ ordered:", ordered)
-
+  const {loggedInUser} = useContext(UserContext)
   useEffect(() => {
     fetch(`/api/orders/${orderId}`)
       .then((res) => res.json())
@@ -16,7 +16,7 @@ const Confirmation = () => {
         setOrdered(parsed.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   }, []);
 
@@ -36,9 +36,10 @@ const Confirmation = () => {
             <Contents>{`Price: ${item.price}`}</Contents>
           </div>
         ))}
-        <Contents>{`By: ${ordered.email}`}</Contents>
-        <Contents>{`We sent you a confirmation email to: ${ordered.email}`}</Contents>
+        <Contents>{`By: ${loggedInUser}`}</Contents>
         <Contents>{`Address: ${ordered.shipping.address}`}</Contents>
+        <Contents>{`Postal Code: ${ordered.shipping.postalCode}`}</Contents>
+        <Contents>{`We sent you a confirmation email to: ${ordered.email}`}</Contents>
       </ContentWrapper>
     </Container>
   );
