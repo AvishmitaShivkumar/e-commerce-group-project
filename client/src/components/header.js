@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { AiOutlineShoppingCart} from "react-icons/ai";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SearchBar from "./searchbar";
 import { useContext } from "react";
@@ -11,6 +11,7 @@ const Header = () => {
   const {currentUser, setCurrentUser, loggedInUser} = useContext(UserContext);
 
   const [categories, setCategories ] = useState("");
+  const navigate = useNavigate();
 
   // fetches the categories and stores it in state
 
@@ -30,6 +31,15 @@ const Header = () => {
     window.alert("You are signed out!")
   }
 
+  const cartNavigation = () => {
+    if(currentUser){
+      navigate("/cart")
+    }
+    else{
+      navigate("/signin")
+    }
+  }
+
   return (
     <>
       {!categories ? <h1>Loading...</h1> :
@@ -41,7 +51,7 @@ const Header = () => {
         <SearchBar/>
         <StyledNavlink to="/signin">{currentUser ? `Hello ${loggedInUser}` : "Sign In"}</StyledNavlink>
         <StyledNavlink to="/" onClick={signOut}>{currentUser && "Sign Out"}</StyledNavlink>
-        <Link to="/cart" style={{color:"var(--color-secondary)",fontSize: "25px" }}><AiOutlineShoppingCart /></Link>
+        <Cart onClick={cartNavigation} style={{color:"var(--color-secondary)",fontSize: "25px" }}><AiOutlineShoppingCart /></Cart>
       </SearchCart>
         </Container>
           <CategoryContainer>
@@ -127,6 +137,12 @@ display: flex;
 align-items: center;
 `
 
+const Cart = styled.button`
+padding: 0;
+border: none;
+background: none;
+cursor: pointer;
+`
 
 
 export default Header
