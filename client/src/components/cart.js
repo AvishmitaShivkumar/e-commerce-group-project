@@ -1,11 +1,15 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Loader from "./Loader";
+import {UserContext} from "./UserContext"
 
 const Cart = ({ finalTotal, setFinalTotal }) => {
   const [cartItems, setCartItems] = useState();
   const [loading, setLoading] = useState(false);
+
+  const {currentUser} = useContext(UserContext);
+  const Navigate = useNavigate()
 
   const user = localStorage.getItem("user");
   const userId = JSON.parse(user);
@@ -55,6 +59,10 @@ const Cart = ({ finalTotal, setFinalTotal }) => {
         }
       });
   };
+
+  if(currentUser===null){
+    Navigate("/")
+  }
 
   return (
     <>
