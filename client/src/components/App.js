@@ -14,15 +14,20 @@ import SignUp from "./signup";
 import GlobalStyles from "./globalstyles";
 import ContactSupport from "./contact";
 import SignUpConfirmation from "./SignUpConfirmation";
+import { UserContext } from "./UserContext";
+import { useContext } from "react";
 
 function App() {
+
+  const {currentUser} = useContext(UserContext);
+
   return (
     <BrowserRouter>
       <GlobalStyles />
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart" element={!currentUser===null ? <Cart /> : <SignIn />}/>
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/company/:_id" element={<CompanyPage />} />
         {/* <Route path="/confirmation" element={<Confirmation />} /> */}

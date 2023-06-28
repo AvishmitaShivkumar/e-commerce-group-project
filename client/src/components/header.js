@@ -27,6 +27,7 @@ const Header = () => {
     event.preventDefault();
     localStorage.removeItem("user");
     setCurrentUser(null);
+    window.alert("You are signed out!")
   }
 
   return (
