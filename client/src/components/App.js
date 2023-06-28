@@ -29,8 +29,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-
-        <Route path="/cart" element={!currentUser===null ? <Cart finalTotal={finalTotal} setFinalTotal={setFinalTotal}/> : <SignIn />}/>
+        <Route path="/cart" element={<Cart finalTotal={finalTotal} setFinalTotal={setFinalTotal}/> }/>
         <Route path="/checkout" element={<Checkout finalTotal={finalTotal}/>} />
         <Route path="/company/:_id" element={<CompanyPage />} />
         {/* <Route path="/confirmation" element={<Confirmation />} /> */}
