@@ -7,13 +7,11 @@ import { AiFillStar } from "react-icons/ai";
 
 const HomePage = () => {
   const { allItems } = useContext(InventoryContext);
-
   const [randomItem, setRandomItem] = useState({});
   const [lifestyleCategory, setLifestyleCategory] = useState(null);
   const [fitnessCategory, setFitnessCategory] = useState(null);
   const [medicalCategory, setMedicalCategory] = useState(null);
 
-  console.log(allItems);
 
   useEffect(() => {
     const index = Math.floor(Math.random() * 348);
@@ -27,7 +25,6 @@ const HomePage = () => {
     setLifestyleCategory(lifestyleWatch);
   }, [allItems]);
 
-  console.log(lifestyleCategory);
 
   useEffect(() => {
     const fitnessWatch = allItems.find((item) => {
@@ -36,7 +33,6 @@ const HomePage = () => {
     setFitnessCategory(fitnessWatch);
   }, [allItems]);
 
-  console.log(fitnessCategory);
 
   useEffect(() => {
     const medicalWatch = allItems.find((item) => {
@@ -45,7 +41,6 @@ const HomePage = () => {
     setMedicalCategory(medicalWatch);
   }, [allItems]);
 
-  console.log(medicalCategory);
 
   return (
     <>
@@ -101,10 +96,12 @@ const HomePage = () => {
 };
 
 const Container = styled.div`
-  height: 100vh;
+  height: 105vh;
 `;
 
 const UpperBanner = styled(Link)`
+  position: relative;
+  bottom: 16px;
   text-decoration: none;
   flex-direction: column;
   margin-top: 1rem;

@@ -7,7 +7,7 @@ const Confirmation = () => {
 
   const { orderId } = useParams();
   const [ordered, setOrdered] = useState(null);
-  console.log("🚀 ~ file: confirmation.js:10 ~ Confirmation ~ ordered:", ordered)
+  // console.log("🚀 ~ file: confirmation.js:10 ~ Confirmation ~ ordered:", ordered)
 
   useEffect(() => {
     fetch(`/api/orders/${orderId}`)

@@ -9,6 +9,8 @@ const SignUp = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("")
+
 
   const { currentUser } = useContext(UserContext);
 
@@ -34,6 +36,8 @@ const SignUp = () => {
         if (parsed.status === 200) {
           localStorage.setItem("user", JSON.stringify(parsed.userId));
           navigate("/signupconfirmation");
+        } else if (parsed.status === 400) {
+          setErrorMessage("Email is already taken. Please choose a different email.");
         }
       })
       .catch((error) => {
@@ -75,6 +79,7 @@ const SignUp = () => {
                 onChange={(e) => setEmail(e.target.value)}
               ></Input>
             </label>
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
             <label>
               <LabelTitle>Password</LabelTitle>
               <Input
@@ -138,6 +143,9 @@ const Input = styled.input`
     outline: 2px solid var(--color-primary);
   }
 `;
+
+const ErrorMessage = styled.p`
+`
 
 const SignUpButton = styled.button`
   align-items: center;
