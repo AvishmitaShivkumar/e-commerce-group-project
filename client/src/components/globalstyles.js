@@ -7,11 +7,6 @@ export default createGlobalStyle`
 	--color-primary: #0A0A33;
 	--color-secondary: #EFDECD;
 	--color-accent: #D93C1C;
-	
-    --color-blush: #edbbc4;
-    --color-ocean: #00838d;
-	--color-marigold: #f28800;
-    --color-navy: #004363;
   }
 
 /* http://meyerweb.com/eric/tools/css/reset/ 

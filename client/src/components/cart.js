@@ -201,8 +201,8 @@ const RemoveButton = styled.button`
   -webkit-user-select: none;
   touch-action: manipulation;
   vertical-align: baseline;
-  /* width: auto; */
   width: auto;
+
 
   &:hover,
   &:focus {
@@ -268,7 +268,6 @@ const Checkout = styled(Link)`
   -webkit-user-select: none;
   touch-action: manipulation;
   vertical-align: baseline;
-  /* width: auto; */
   width: 20rem;
 
   &:hover,
@@ -296,27 +295,7 @@ const Checkout = styled(Link)`
     background-color: var(--color-primary);
     opacity: 0.4;
     cursor: not-allowed;
-  }
-
-  /* padding: 20px 40px;
-  margin-top: 1em;
-  width: 300px;
-  border-radius: 10px;
-  color: white;
-  font-size: x-large;
-  justify-self: center;
-  margin-bottom: 4rem;
-
-  &:hover {
-    background: var(--color-ocean);
-    cursor: pointer;
-  }
-
-  &:disabled {
-    background: #707070;
-    opacity: 0.4;
-    cursor: not-allowed;
-  } */
+}
 `;
 
 export default Cart;
