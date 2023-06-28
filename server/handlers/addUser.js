@@ -37,7 +37,7 @@ const addUser = async (request, response) => {
   if (existingUser) {
     return response.status(400).json({
       status: 400,
-      message: "A user with this email already exists.",
+      message: "A user with this email already exists. Please sign in",
     });
   }
     //we create the new user that will be pushed to our users collection

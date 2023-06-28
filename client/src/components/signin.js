@@ -5,6 +5,8 @@ import { UserContext } from "./UserContext";
 
 const SignIn = () => {
   const { currentUser, setCurrentUser } = useContext(UserContext);
+  const [errorMessage, setErrorMessage] = useState("")
+
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -20,18 +22,23 @@ const SignIn = () => {
         setData(parsed.data);
       });
   }, []);
-
+  
   let _id = null;
+  
   const handleClick = (event) => {
     event.preventDefault();
-
+  
     if (password !== "" && email !== "") {
       const foundUser = data.find((user) => {
         return password === user.password && email === user.email;
       });
-      _id = foundUser._id;
+      
+      if (foundUser) {
+        _id = foundUser._id;
+      } else {
+      }
     }
-
+  
     fetch(`/api/user/${_id}`)
       .then((response) => response.json())
       .then((parsed) => {
@@ -39,6 +46,8 @@ const SignIn = () => {
           localStorage.setItem("user", JSON.stringify(parsed.data._id));
           setCurrentUser(parsed.data._id);
           navigate("/");
+        } else if (parsed.status === 404) {
+          setErrorMessage("User or password are incorrect.");
         }
       })
       .catch((error) => {
@@ -49,7 +58,6 @@ const SignIn = () => {
   useEffect(() => {
     if (currentUser) return navigate("/");
   }, [currentUser]);
-
   // fetch (post) to push user info into database
 
   return (
@@ -72,6 +80,7 @@ const SignIn = () => {
                 onChange={(event) => setPassword(event.target.value)}
               ></Input>
             </label>
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
             <SignInButton>Sign In!</SignInButton>
           </Form>
           <SignUpTitle>Don't have an account?</SignUpTitle>
@@ -95,6 +104,9 @@ const Container = styled.section`
   align-items: center;
   background-color: var(--color-secondary);
 `;
+
+const ErrorMessage = styled.p`
+`
 
 const Form = styled.form`
   display: flex;
