@@ -237,7 +237,7 @@ const Checkout = ({ finalTotal }) => {
                             <Summary>Shipping: $10</Summary>
                             <Summary>Tax: 5%</Summary>
                         </SummaryDiv>
-                        <OrderTotal>Order Total: {finalTotal*1.05+10}</OrderTotal>
+                        <OrderTotal>Order Total: {(finalTotal*1.05+10).toFixed(2)}</OrderTotal>
                         <OrderButton type="submit">Order now</OrderButton>
                     </OrderSummeryContainer>
 
