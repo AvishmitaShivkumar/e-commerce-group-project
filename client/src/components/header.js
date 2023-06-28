@@ -61,7 +61,7 @@ const Header = () => {
 const Wrapper = styled.div`
 position: sticky;
 top: 0;
-width: 100vw;
+width: 100%;
 z-index:11;
 `
 

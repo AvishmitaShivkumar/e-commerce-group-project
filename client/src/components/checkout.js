@@ -97,156 +97,152 @@ const Checkout = ({ finalTotal }) => {
         )
     }
 
-    
+
 
     return (
         <Container>
             <CheckoutHeader>Checkout</CheckoutHeader>
             
             <DivLeft>
-              <Form onSubmit={handleSubmit}>
-              <ItemsShipping>
-                <ItemDiv>
-                <YourItems>Your Items</YourItems>
-                {ordered.cart.map((item) => {
+                <Form onSubmit={handleSubmit}>
+                    <ItemsShipping>
+                        <ItemDiv>
+                        <YourItems>Your Items</YourItems>
+                        {ordered.cart.map((item) => {
 
-                    return (
-                        <ItemGroup key={item._id}>
-                            <Img src={item.imageSrc}/>
-                                <div>
-                                    <ItemInfo>{item.name}</ItemInfo>
-                                    <ItemInfo>Price per Item{item.price}</ItemInfo>
-                                    <ItemInfo>Qty: {item.quantity}</ItemInfo>
-                                </div>
-                        </ItemGroup>
-                    );
-                })}
-                </ItemDiv>
-                <InputWrapper>
-                  <CustomerInfo>Shipping information</CustomerInfo>
-                  <InputContainer>
-                      <Label htmlFor="fname">First Name:</Label>
-                      <Input
-                      onChange={handleChange}
-                      value={formData.fname}
-                      type="text"
-                      id="fname"
-                      name="fname"
-                      required
-                      />
-                  </InputContainer>
-                  <InputContainer>
-                      <Label htmlFor="lname">Last Name:</Label>
-                      <Input
-                      onChange={handleChange}
-                      value={formData.lname}
-                      type="text"
-                      id="lname"
-                      name="lname"
-                      required
-                      />
-                  </InputContainer>
-                  <InputContainer>
-                      <Label htmlFor="address">Address:</Label>
-                      <Input
-                      
-                      value={formData.address}
-                      onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                      type="text"
-                      id="address"
-                      name="address"
-                      placeholder="1234 Main St"
-                      required
-                      />
-                  </InputContainer>
-                  <InputContainer>
-                      <Label htmlFor="address2">Address 2 (Optional):</Label>
-                      <Input
-                      value={formData.address2}
-                      onChange={(e) => setFormData({ ...formData, address2: e.target.value })}
-                      type="text"
-                      id="address2"
-                      name="address2"
-                      placeholder="Apartment or suite"
-                      />
-                  </InputContainer>
-                  <InputContainer>
-                      <Label htmlFor="address2">Postal code:</Label>
-                      <Input
-                      
-                      value={formData.postalcode}
-                      onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-                      type="text"
-                      id="postalcode"
-                      name="postalcode"
-                      placeholder="A0A 0A0"
-                      required
-                      />
-                  </InputContainer>
-                  </InputWrapper>
-                  <InputWrapper>
-                  <PaymentInfo>Payment</PaymentInfo>{" "}
-                  <InputContainer>
-                    <Label htmlFor="creditNum">Card number:</Label>
-                    <Input
-                      type="text"
-                      id="creditNum"
-                      name="creditNum"
-                      placeholder="0000-0000-0000-0000"
-                      minlength="19"
-                      maxlength="19"
-                      required
-                    />
-                  </InputContainer>
-                  <InputContainer>
-                    <Label htmlFor="nameOnCard">Name on card:</Label>
-                    <Input
-                      type="text"
-                      id="nameOnCard"
-                      name="nameOnCard"
-                      required
-                    />
-                  </InputContainer>
-                  <InputContainer>
-                    <Label htmlFor="expDate">Expiration date:</Label>
-                    <Input
-                      type="text"
-                      id="expDate"
-                      name="expDate"
-                      placeholder="MM/YY"
-                      minlength="5"
-                      maxlength="5"
-                      required
-                    />
-                  </InputContainer>
-                  <InputContainer>
-                    <Label htmlFor="code">Security code (CVV/CVC):</Label>
-                    <Input
-                      type="text"
-                      id="code"
-                      name="code"
-                      minlength="3"
-                      maxlength="4"
-                      required
-                    />
-                  </InputContainer>
-                  </InputWrapper>
-                </ItemsShipping>
-                  
+                            return (
+                                <ItemGroup key={item._id}>
+                                    <Img src={item.imageSrc}/>
+                                        <div>
+                                            <ItemInfo>{item.name}</ItemInfo>
+                                            <ItemInfo>Price per Item{item.price}</ItemInfo>
+                                            <ItemInfo>Qty: {item.quantity}</ItemInfo>
+                                        </div>
+                                </ItemGroup>
+                            );
+                        })}
+                        </ItemDiv>
+                    <InputWrapper>
+                        <CustomerInfo>Shipping information</CustomerInfo>
+                        <InputContainer>
+                            <Label htmlFor="fname">First Name:</Label>
+                            <Input
+                            onChange={handleChange}
+                            value={formData.fname}
+                            type="text"
+                            id="fname"
+                            name="fname"
+                            required
+                            />
+                        </InputContainer>
+                        <InputContainer>
+                            <Label htmlFor="lname">Last Name:</Label>
+                            <Input
+                            onChange={handleChange}
+                            value={formData.lname}
+                            type="text"
+                            id="lname"
+                            name="lname"
+                            required
+                            />
+                        </InputContainer>
+                        <InputContainer>
+                            <Label htmlFor="address">Address:</Label>
+                            <Input
+                            
+                            value={formData.address}
+                            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                            type="text"
+                            id="address"
+                            name="address"
+                            placeholder="1234 Main St"
+                            required
+                            />
+                        </InputContainer>
+                        <InputContainer>
+                            <Label htmlFor="address2">Address 2 (Optional):</Label>
+                            <Input
+                            value={formData.address2}
+                            onChange={(e) => setFormData({ ...formData, address2: e.target.value })}
+                            type="text"
+                            id="address2"
+                            name="address2"
+                            placeholder="Apartment or suite"
+                            />
+                        </InputContainer>
+                        <InputContainer>
+                            <Label htmlFor="address2">Postal code:</Label>
+                            <Input
+                            
+                            value={formData.postalcode}
+                            onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
+                            type="text"
+                            id="postalcode"
+                            name="postalcode"
+                            placeholder="A0A 0A0"
+                            required
+                            />
+                        </InputContainer>
+                        </InputWrapper>
+                        <InputWrapper>
+                        <PaymentInfo>Payment</PaymentInfo>{" "}
+                        <InputContainer>
+                            <Label htmlFor="creditNum">Card number:</Label>
+                            <Input
+                            type="text"
+                            id="creditNum"
+                            name="creditNum"
+                            placeholder="0000-0000-0000-0000"
+                            minLength="19"
+                            maxLength="19"
+                            />
+                        </InputContainer>
+                        <InputContainer>
+                            <Label htmlFor="nameOnCard">Name on card:</Label>
+                            <Input
+                            type="text"
+                            id="nameOnCard"
+                            name="nameOnCard"
+                            />
+                        </InputContainer>
+                        <InputContainer>
+                            <Label htmlFor="expDate">Expiration date:</Label>
+                            <Input
+                            type="text"
+                            id="expDate"
+                            name="expDate"
+                            placeholder="MM/YY"
+                            minLength="5"
+                            maxLength="5"
+                            />
+                        </InputContainer>
+                        <InputContainer>
+                            <Label htmlFor="code">Security code (CVV/CVC):</Label>
+                            <Input
+                            type="text"
+                            id="code"
+                            name="code"
+                            minLength="3"
+                            maxLength="4"
+                            />
+                        </InputContainer>
+                        </InputWrapper>
+                        </ItemsShipping>
+                        
 
-              <OrderSummeryContainer>
-                  <OrderSummery>Order Summary</OrderSummery>
-                  <SummaryDiv>
-                    <Summary>Items:</Summary>
-                    <Summary>Shipping: $10</Summary>
-                    <Summary>Tax: 5%</Summary>
-                  </SummaryDiv>
-                  <OrderTotal>Order Total: {finalTotal}</OrderTotal>
-                  <OrderButton type="submit">Order now</OrderButton>
-              </OrderSummeryContainer>
+                    <OrderSummeryContainer>
+                        <OrderSummery>Order Summary</OrderSummery>
+                        <SummaryDiv>
+                            <Summary>Items:{finalTotal}</Summary>
+                            <Summary>Shipping: $10</Summary>
+                            <Summary>Tax: 5%</Summary>
+                        </SummaryDiv>
+                        <OrderTotal>Order Total: {finalTotal*1.05+10}</OrderTotal>
+                        <OrderButton type="submit">Order now</OrderButton>
+                    </OrderSummeryContainer>
 
-            </Form>
-          </DivLeft>
+                </Form>
+            </DivLeft>
         </Container>
     );
 };
