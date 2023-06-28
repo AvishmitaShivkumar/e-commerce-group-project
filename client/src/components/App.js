@@ -19,7 +19,9 @@ import { useContext } from "react";
 
 function App() {
 
-  const {currentUser} = useContext(UserContext);
+    const {currentUser} = useContext(UserContext);
+    const [finalTotal, setFinalTotal] = useState(0)
+
 
   return (
     <BrowserRouter>
@@ -27,8 +29,9 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/cart" element={!currentUser===null ? <Cart /> : <SignIn />}/>
-        <Route path="/checkout" element={<Checkout />} />
+
+        <Route path="/cart" element={!currentUser===null ? <Cart finalTotal={finalTotal} setFinalTotal={setFinalTotal}/> : <SignIn />}/>
+        <Route path="/checkout" element={<Checkout finalTotal={finalTotal}/>} />
         <Route path="/company/:_id" element={<CompanyPage />} />
         {/* <Route path="/confirmation" element={<Confirmation />} /> */}
         <Route path="/confirmation/:orderId" element={<Confirmation />} />

@@ -7,13 +7,11 @@ import { AiFillStar } from "react-icons/ai";
 
 const HomePage = () => {
   const { allItems } = useContext(InventoryContext);
-
   const [randomItem, setRandomItem] = useState({});
   const [lifestyleCategory, setLifestyleCategory] = useState(null);
   const [fitnessCategory, setFitnessCategory] = useState(null);
   const [medicalCategory, setMedicalCategory] = useState(null);
 
-  console.log(allItems);
 
   useEffect(() => {
     const index = Math.floor(Math.random() * 348);
@@ -27,7 +25,6 @@ const HomePage = () => {
     setLifestyleCategory(lifestyleWatch);
   }, [allItems]);
 
-  console.log(lifestyleCategory);
 
   useEffect(() => {
     const fitnessWatch = allItems.find((item) => {
@@ -36,7 +33,6 @@ const HomePage = () => {
     setFitnessCategory(fitnessWatch);
   }, [allItems]);
 
-  console.log(fitnessCategory);
 
   useEffect(() => {
     const medicalWatch = allItems.find((item) => {
@@ -45,7 +41,6 @@ const HomePage = () => {
     setMedicalCategory(medicalWatch);
   }, [allItems]);
 
-  console.log(medicalCategory);
 
   return (
     <>
@@ -101,10 +96,12 @@ const HomePage = () => {
 };
 
 const Container = styled.div`
-  height: 100vh;
+  height: 105vh;
 `;
 
 const UpperBanner = styled(Link)`
+  position: relative;
+  bottom: 16px;
   text-decoration: none;
   flex-direction: column;
   margin-top: 1rem;
@@ -155,15 +152,27 @@ const Bottom = styled.div`
 `;
 
 const Left = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  margin: 2rem;
-  border-radius: 5%;
-`;
+width: 50%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+background-color:rgba(255,255,255,0.95);
+margin: 2rem;
+border-radius: 0.5rem;
+position: relative;
+padding: 0.5rem;
+
+&::after{
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 100%;
+  top: 0;
+  background-color:rgba(255,255,255,0.1);
+  border-radius: 0.5rem;
+}
+`
 
 const Right = styled.div`
   width: 50%;
@@ -189,8 +198,7 @@ const LowerCategory = styled(Link)`
   margin-top: 2rem;
   width: 25%;
   height: 25rem;
-  box-shadow: rgba(0, 0, 0, 0.7) 0px 2px 4px;
-  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
   text-decoration: none;
 
   &:hover {

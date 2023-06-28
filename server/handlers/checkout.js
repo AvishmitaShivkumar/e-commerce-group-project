@@ -52,7 +52,7 @@ const checkOut = async (request, response) => {
 
             if (cartItem.quantity <= stock.numInStock) {
 
-                const updateStock = await db.collection("items").updateOne({ _id: cart }, { $inc: { numInStock: -cartItem.quantity } });
+                const updateStock = await db.collection("items").updateOne({ _id: cart[i] }, { $inc: { numInStock: -cartItem.quantity } });
                 const deleteCart = await db.collection("users").updateOne({ _id: user },{ $set: { cart: [] } });
             } else if (cartItem.quantity >= stock.numInStock) {
                 response.status(400).json({ status: 400, message:`Sorry we do not have that many in stock, you have ${someCalc} to many` });
@@ -60,7 +60,7 @@ const checkOut = async (request, response) => {
             }
             
         }
-        response.status(200).json({ status: 200 });
+        response.status(200).json({ status: 200, data:newId});
 
     } catch (err) {
         console.log(err);

@@ -211,7 +211,7 @@ outline-offset: -.1rem;
     border-color: var(--color-primary);
   }
   z-index: 10000;
-
+  position: relative;
 `;
 
 
@@ -227,7 +227,6 @@ const Suggestions = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
   top: 3rem;
-  right:2.9rem;
   background-color: white;
 `;
 

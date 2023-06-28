@@ -32,10 +32,10 @@ const Header = () => {
 
   return (
     <>
-      {!categories ? <h1>Loading</h1> :
+      {!categories ? <h1>Loading...</h1> :
         <Wrapper>
     <Container>
-      <StyledNavlink to="/">Logo</StyledNavlink>
+      <LogoLink to="/">W2</LogoLink>
       <TitleNavlink to="/">Wearables </TitleNavlink>
       <SearchCart>
         <SearchBar/>
@@ -62,7 +62,7 @@ const Header = () => {
 const Wrapper = styled.div`
 position: sticky;
 top: 0;
-width: 100vw;
+width: 100%;
 z-index:11;
 `
 
@@ -79,6 +79,13 @@ opacity: .5;
 }
 
 `
+const LogoLink = styled(StyledNavlink)`
+color: var(--color-primary);
+-webkit-text-stroke: 1px var(--color-secondary);
+font-size: 1.4rem;
+font-weight: bold;
+`
+
 const TitleNavlink = styled(StyledNavlink)`
 font-size: xx-large;
 font-weight: 600;
