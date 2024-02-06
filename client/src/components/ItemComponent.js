@@ -22,7 +22,7 @@ const ItemComponent = ({oneItem, company}) => {
       navigate("/signin")
     }
     else{
-    fetch("/api/cartcollection", {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/cartcollection`, {
       method: "POST",
       body: JSON.stringify(
         {

@@ -16,7 +16,7 @@ const Header = () => {
   // fetches the categories and stores it in state
 
   useEffect(() => {
-    fetch("/api/allcategories")
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/allcategories`)
     .then(response => response.json())
     .then(parsed => {
       setCategories(parsed.data)

@@ -13,7 +13,7 @@ const CompanyPage = () => {
   const [filteredItems, setFilteredItems] = useState([]);
 
   useEffect(() => {
-    fetch(`/api/company/${_id}`)
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/company/${_id}`)
       .then((response) => response.json())
       .then(({ data }) => {
         setcompanyInfo(data);

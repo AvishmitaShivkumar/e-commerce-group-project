@@ -16,7 +16,7 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("/api/users")
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users`)
       .then((response) => response.json())
       .then((parsed) => {
         setData(parsed.data);
@@ -39,7 +39,7 @@ const SignIn = () => {
       }
     }
   
-    fetch(`/api/user/${_id}`)
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/${_id}`)
       .then((response) => response.json())
       .then((parsed) => {
         if (parsed.status === 200) {

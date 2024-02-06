@@ -2,6 +2,8 @@
 
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
+
 const { getCategories } = require("./handlers/getCategories");
 const getCompanies = require("./handlers/getCompanies");
 const getCompany = require("./handlers/getCompany");
@@ -33,12 +35,13 @@ express()
     );
     next();
   })
+  .use(cors()) //to handle cors error
   .use(morgan("tiny"))
   .use(express.static("./server/assets"))
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
   .use("/", express.static(__dirname + "/"))
-
+  
   // REST endpoints?
   .get("/api/allcategories", getCategories)
 

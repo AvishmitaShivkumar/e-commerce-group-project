@@ -16,7 +16,7 @@ const Cart = ({ finalTotal, setFinalTotal }) => {
 
   useEffect(
     () =>
-      fetch(`/api/user/${userId}`)
+      fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/${userId}`)
         .then((response) => response.json())
         .then((parsed) => {
           if (parsed.status === 200) {
@@ -42,7 +42,7 @@ const Cart = ({ finalTotal, setFinalTotal }) => {
   }, [cartItems]);
 
   const removeItemFromCart = (itemId) => {
-    fetch(`/api/delete/cart/${userId}/items/${itemId}`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/delete/cart/${userId}/items/${itemId}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",

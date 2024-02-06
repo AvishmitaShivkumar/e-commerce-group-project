@@ -22,7 +22,7 @@ const [loggedInUser, setLoggedInUser] = useState("");
 
 useEffect(()=>(
   currentUser && 
-  fetch(`/api/user/${currentUser}`)
+  fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/${currentUser}`)
   .then((response) => response.json())
   .then((parsed) => {
     if(parsed.status === 200){

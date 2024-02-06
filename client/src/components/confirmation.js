@@ -10,7 +10,7 @@ const Confirmation = () => {
   const [ordered, setOrdered] = useState(null);
   const {loggedInUser} = useContext(UserContext)
   useEffect(() => {
-    fetch(`/api/orders/${orderId}`)
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/orders/${orderId}`)
       .then((res) => res.json())
       .then((parsed) => {
         setOrdered(parsed.data);

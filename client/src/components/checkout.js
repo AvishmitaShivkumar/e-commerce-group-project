@@ -44,7 +44,7 @@ const Checkout = ({ finalTotal }) => {
     
 
     useEffect(() => {
-        fetch(`/api/user/${userId}`)
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/${userId}`)
         .then((res) => res.json())
         .then((parsed) => {
             setOrdered(parsed.data);
@@ -70,7 +70,7 @@ const Checkout = ({ finalTotal }) => {
             },
         };
 
-        fetch("/api/orders", {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/orders`, {
             method: "POST",
             headers: {
             Accept: "application/json",

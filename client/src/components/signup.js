@@ -23,7 +23,7 @@ const SignUp = () => {
   // fetch (post) to push user info into database
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch("/api/signup", {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/signup`, {
       method: "POST",
       body: JSON.stringify({ firstName, lastName, email, password }),
       headers: {

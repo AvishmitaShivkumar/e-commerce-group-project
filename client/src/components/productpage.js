@@ -11,7 +11,7 @@ const ProductPage = () => {
   const [ company, setCompany ] = useState("");
 
   useEffect(() => {
-    fetch(`/api/item/${product}`)
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/item/${product}`)
     .then(response => response.json())
     .then(parsed => {
       setOneItem(parsed.data)
@@ -20,7 +20,7 @@ const ProductPage = () => {
 
     useEffect(() => {
     if(oneItem) { 
-      fetch(`/api/company/${oneItem.companyId}`)
+      fetch(`${process.env.REACT_APP_BACKEND_URL}/api/company/${oneItem.companyId}`)
     .then(response => response.json())
     .then(parsed => {
       setCompany(parsed.data)
